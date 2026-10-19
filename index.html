@@ -1,0 +1,1469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Little Stitch Studio: design your own hand-knitted scarf. Pick the yarn, colours, stitch, size and finish, and we knit it to order.">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Little Stitch Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: a cosy craft-table — the scarf hangs on a wooden peg on a polka-dot board (sticky) with a close-up lens; chunky yarn-ball choices beside it; stitched cards below. */
+:root{
+  --paw:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cellipse%20cx%3D%2712%27%20cy%3D%2716.5%27%20rx%3D%275.5%27%20ry%3D%274.5%27/%3E%3Ccircle%20cx%3D%275%27%20cy%3D%2710.5%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%279.3%27%20cy%3D%276%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%2714.7%27%20cy%3D%276%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%2719%27%20cy%3D%2710.5%27%20r%3D%272.4%27/%3E%3C/svg%3E");
+  --bg:#FDF1F4;          /* strawberry milk */
+  --surface:#FFFFFF;
+  --fg:#4B2D45;          /* plum ink */
+  --muted:#8C6A82;
+  --line:#F2D3DE;
+  --stitch:#F4A9C0;      /* dashed stitch lines */
+  --accent:#EE6F9A;      /* bubblegum */
+  --accent-fg:#FFFFFF;
+  --mint:#D3F1E4; --butter:#FFF0BF; --lilac:#E9DFFB; --sky:#D9EEFB; --peach:#FFE1D3;
+  --wool:#FFFFFF; --face:#4B2D45; --earpink:#F7BBCC;
+  --warn:#C0436E;
+  --font-display:"Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --font-body:"Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#251A26; --surface:#2F2232; --fg:#F8E7EF; --muted:#C7A9BA; --line:#44324A; --stitch:#7A4A63;
+    --accent:#FF8DB2; --accent-fg:#2A1020;
+    --mint:#21392F; --butter:#3B3320; --lilac:#2F2943; --sky:#1F3140; --peach:#3E2A24;
+    --wool:#F3E9EE; --face:#3A2537; --earpink:#8A4F6C; --warn:#FF9DBB; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#251A26; --surface:#2F2232; --fg:#F8E7EF; --muted:#C7A9BA; --line:#44324A; --stitch:#7A4A63;
+  --accent:#FF8DB2; --accent-fg:#2A1020;
+  --mint:#21392F; --butter:#3B3320; --lilac:#2F2943; --sky:#1F3140; --peach:#3E2A24;
+  --wool:#F3E9EE; --face:#3A2537; --earpink:#8A4F6C; --warn:#FF9DBB; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(var(--line) 1.5px, transparent 1.6px);background-size:26px 26px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;line-height:1.12;text-wrap:balance;margin:0}
+a{color:inherit}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+.stitched{position:relative;background:var(--surface);border-radius:26px;box-shadow:0 6px 0 var(--line)}
+.stitched::before{content:"";position:absolute;inset:8px;border:2px dashed var(--stitch);border-radius:20px;pointer-events:none}
+.stitched > *{position:relative;z-index:1}
+
+/* header */
+.top{padding-block:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand svg{width:40px;height:40px;flex:none}
+.brand b{font-family:var(--font-display);font-weight:700;font-size:1.45rem;color:var(--accent)}
+.top nav{display:flex;gap:6px;flex-wrap:wrap}
+.top nav a{text-decoration:none;font-weight:700;font-size:.92rem;padding:7px 14px;border-radius:999px;background:var(--surface);box-shadow:0 3px 0 var(--line)}
+.top nav a:hover{background:var(--peach)}
+
+/* hero */
+.intro{padding-block:14px 8px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:center}
+.intro h1{font-size:clamp(2.2rem,5.6vw,3.8rem)}
+.intro h1 span{color:var(--accent)}
+.intro p{margin:12px 0 0;color:var(--muted);max-width:46ch;font-size:1.05rem}
+.pill{display:inline-flex;gap:8px;align-items:center;background:var(--butter);padding:7px 14px;border-radius:999px;font-weight:800;font-size:.85rem;margin-top:16px}
+.mascot{width:100%;max-width:300px;justify-self:center}
+.mascot .bob{animation:bob 3.2s ease-in-out infinite}
+.mascot .roll{animation:roll 5s linear infinite;transform-box:fill-box;transform-origin:center}
+.mascot .swing{animation:swing 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:top center}
+.mascot .tail{animation:swish 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:100% 100%}
+.mascot .paw{animation:bat 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:0% 100%}
+.mascot .blink{animation:blink 4s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes swish{50%{transform:rotate(-12deg)}}
+@keyframes bat{0%,60%,100%{transform:rotate(0)}30%{transform:rotate(-16deg)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes roll{to{transform:rotate(360deg)}}
+@keyframes swing{50%{transform:rotate(7deg)}}
+
+/* designer */
+.designer{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;padding-block:24px 56px;align-items:start}
+.stage{position:sticky;top:12px;display:flex;flex-direction:column;gap:14px}
+.board{padding:14px}
+.canvas-box{position:relative;width:100%;aspect-ratio:5/4;max-width:100%;border-radius:20px;overflow:hidden;
+  background:var(--sky);background-image:radial-gradient(var(--surface) 3px, transparent 3.5px);background-size:22px 22px}
+canvas{display:block;width:100%;height:100%}
+canvas.pop{animation:pop .35s ease}
+@keyframes pop{40%{transform:scale(1.02) rotate(-.4deg)}}
+.dims{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);padding:10px 8px 2px}
+.dims b{color:var(--fg)}
+
+.quote{padding:20px 22px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center}
+.quote .price{font-family:var(--font-display);font-weight:700;font-size:2.2rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.quote .eta{font-size:.92rem;color:var(--muted)}
+.quote .eta b{color:var(--fg)}
+.quote details{grid-column:1/-1;font-size:.9rem;color:var(--muted)}
+.quote summary{cursor:pointer;width:max-content;font-weight:700}
+.breakdown{display:grid;grid-template-columns:1fr auto;gap:3px 16px;margin-top:8px;font-variant-numeric:tabular-nums}
+.breakdown span:nth-child(even){text-align:right}
+.btn{appearance:none;border:0;background:var(--accent);color:var(--accent-fg);padding:13px 22px;border-radius:999px;font-family:var(--font-display);font-weight:600;font-size:1.02rem;cursor:pointer;text-decoration:none;display:inline-block;white-space:nowrap;box-shadow:0 5px 0 color-mix(in srgb, var(--accent) 60%, #000 25%);transition:transform .12s, box-shadow .12s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 color-mix(in srgb, var(--accent) 60%, #000 25%)}
+.btn.ghost{background:var(--surface);color:var(--fg);box-shadow:0 5px 0 var(--line)}
+
+.controls{display:flex;flex-direction:column;gap:14px}
+.group{padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.group h3{font-size:1.15rem;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.group h3 output{font-family:var(--font-body);font-size:.85rem;font-weight:700;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.opts.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.opt{appearance:none;border:2px solid var(--line);background:var(--bg);border-radius:16px;padding:9px 12px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:1px;min-width:0;font-weight:700;transition:transform .12s, background .15s}
+.opt small{color:var(--muted);font-size:.78rem;font-weight:600}
+.opt:hover{transform:translateY(-2px)}
+.opt[aria-pressed="true"]{background:var(--peach);border-color:var(--accent)}
+.opt[aria-pressed="true"] span::after{content:" ♥";color:var(--accent)}
+.opt:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.swatches{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.sw{appearance:none;border:0;border-radius:50%;aspect-ratio:1;cursor:pointer;padding:0;max-width:100%;
+  background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.5), transparent 38%),
+    repeating-linear-gradient(60deg, rgba(0,0,0,.12) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(-30deg, rgba(255,255,255,.12) 0 2px, transparent 2px 7px), var(--c);
+  box-shadow:inset 0 -4px 0 rgba(0,0,0,.15);transition:transform .15s}
+.sw:hover{transform:scale(1.08) rotate(-8deg)}
+.sw[aria-pressed="true"]{box-shadow:inset 0 -4px 0 rgba(0,0,0,.15),0 0 0 3px var(--surface),0 0 0 6px var(--accent);transform:scale(1.06)}
+.range{display:grid;grid-template-columns:4.2rem minmax(0,1fr) 3.8rem;gap:10px;align-items:center;font-size:.88rem;font-weight:700;color:var(--muted)}
+.range output{text-align:right;color:var(--fg)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.hint{font-size:.88rem;color:var(--muted);margin:0;font-weight:700}
+.textin{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:11px 14px;width:100%}
+.textin:focus{border-color:var(--accent);outline:none}
+.check{display:flex;gap:10px;align-items:center;cursor:pointer;font-weight:700}
+.check input{width:20px;height:20px;accent-color:var(--accent)}
+
+/* sections */
+section.band{padding-block:52px;border-top:3px dashed var(--stitch)}
+.band h2{font-size:clamp(1.8rem,3.8vw,2.5rem);margin-bottom:24px}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.steps li{border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.steps li:nth-child(1){background:var(--peach)} .steps li:nth-child(2){background:var(--butter)}
+.steps li:nth-child(3){background:var(--mint)} .steps li:nth-child(4){background:var(--sky)} .steps li:nth-child(5){background:var(--lilac)}
+.steps .day{font-weight:800;font-size:.78rem;background:var(--surface);border-radius:999px;padding:3px 10px;width:max-content}
+.steps b{font-family:var(--font-display);font-weight:600;font-size:1.12rem}
+.steps p{margin:0;color:var(--muted);font-size:.93rem}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+.card{padding:26px}
+.care{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.care li{display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;align-items:start}
+.care li span{font-weight:800;font-size:.8rem;background:var(--mint);border-radius:999px;padding:3px 10px;text-align:center}
+.faq details{border-bottom:2px dotted var(--line);padding-block:12px}
+.faq details:last-child{border-bottom:0}
+.faq summary{cursor:pointer;font-weight:800}
+.faq p{margin:8px 0 0;color:var(--muted);max-width:62ch}
+
+/* order */
+.order{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:start}
+.your{padding:26px;display:flex;flex-direction:column;gap:14px;background:var(--butter)}
+.your dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 16px;font-size:.95rem}
+.your dt{color:var(--muted);font-weight:700}
+.your dd{margin:0}
+.formcard{padding:26px}
+form{display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:.88rem;font-weight:800}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.err{color:var(--warn);font-size:.88rem;font-weight:700;min-height:1.2em;margin:0}
+.done{display:flex;flex-direction:column;gap:12px}
+.done pre{white-space:pre-wrap;font-family:var(--font-body);font-size:.88rem;background:var(--bg);border-radius:16px;padding:14px;margin:0;overflow-x:auto}
+.done .acts{display:flex;gap:12px;flex-wrap:wrap}
+.hearts{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.hearts i{position:absolute;bottom:-30px;font-style:normal;color:var(--accent);animation:float 2.4s ease-out forwards}
+@keyframes float{to{transform:translateY(-105vh) rotate(25deg);opacity:0}}
+footer{padding-block:28px;color:var(--muted);font-size:.9rem;text-align:center;font-weight:700}
+
+@media (max-width:900px){
+  .designer{grid-template-columns:1fr;gap:16px;padding-block:16px 40px}
+  .intro,.two,.order{grid-template-columns:1fr}
+  .mascot{max-width:210px;grid-row:1}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* compact preview that stays on screen while you pick options */
+  .stage{top:env(safe-area-inset-top, 0px);z-index:5;background:var(--bg);padding-block:6px 10px;gap:0}
+  .board{padding:8px;border-radius:22px;box-shadow:0 4px 0 var(--line)}
+  .board::before{inset:5px;border-radius:18px}
+  .canvas-box{aspect-ratio:auto;height:min(32vh, 58vw);border-radius:16px}
+  .dims{display:none}
+  /* price + order button become a bar fixed to the bottom of the screen */
+  .quote{position:fixed;left:0;right:0;bottom:0;z-index:30;border-radius:22px 22px 0 0;
+    padding:12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+    box-shadow:0 -6px 20px rgba(75,45,69,.14);transition:transform .25s ease}
+  .quote::before{inset:6px 6px 0;border-bottom:0;border-radius:16px 16px 0 0}
+  .quote.away{transform:translateY(110%)}
+  .quote details{display:none}
+  .quote .price{font-size:1.6rem}
+  .quote .eta{font-size:.85rem;line-height:1.35}
+  .quote .btn{padding:11px 18px}
+  footer{padding-bottom:calc(120px + env(safe-area-inset-bottom, 0px))}
+}
+@media (max-width:600px){
+  .top{gap:10px;padding-block:14px 6px}
+  .brand svg{width:34px;height:34px}
+  .brand b{font-size:1.3rem}
+  .top nav{width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:6px;margin-bottom:-6px}
+  .top nav::-webkit-scrollbar{display:none}
+  .top nav a{flex:none;white-space:nowrap;font-size:.86rem;padding:6px 12px}
+  .intro{gap:6px;padding-block:4px}
+  .intro h1{font-size:2rem}
+  .intro p{font-size:.98rem}
+  .pill{font-size:.78rem}
+  .mascot{max-width:170px}
+  .controls{gap:12px}
+  .group{padding:18px 18px;gap:10px}
+  .group h3{font-size:1.05rem}
+  .opts.grid3{gap:6px}
+  .opt{padding:8px 9px;border-radius:14px;font-size:.92rem}
+  .opt small{font-size:.72rem}
+  .swatches{gap:8px}
+  .range{grid-template-columns:3.6rem minmax(0,1fr) 3.4rem;font-size:.82rem}
+  .row2{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  section.band{padding-block:40px}
+  .card,.your,.formcard{padding:22px 20px}
+  .care li{grid-template-columns:70px minmax(0,1fr)}
+}
+
+/* extra cuteness */
+.brand svg{width:44px;height:42px}
+.board{position:relative}
+.stage{padding-top:22px}
+.board .ear{position:absolute;top:-22px;width:46px;height:30px;background:var(--surface);clip-path:polygon(50% 0,100% 100%,0 100%);z-index:0}
+.board .ear::after{content:"";position:absolute;left:13px;right:13px;top:10px;bottom:0;background:var(--earpink);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.board .ear.l{left:44px;transform:rotate(-8deg)}
+.board .ear.r{right:44px;transform:rotate(8deg)}
+.peek{position:absolute;left:12px;bottom:0;width:64px;transform:translateY(58%);transition:transform .4s cubic-bezier(.3,1.6,.5,1);z-index:2;cursor:pointer}
+.peek svg{display:block;width:100%;height:auto}
+.peek.up{transform:translateY(14%)}
+.peek:hover{transform:translateY(40%)}
+.peek.up:hover{transform:translateY(14%)}
+.bubble{position:absolute;left:74px;bottom:30px;max-width:calc(100% - 96px);background:#FFFFFF;color:#4B2D45;font-family:var(--font-display);font-weight:600;font-size:.95rem;line-height:1.3;padding:8px 13px;border-radius:16px;box-shadow:0 4px 0 rgba(75,45,69,.15);z-index:3;opacity:0;transform:scale(.6);transform-origin:0% 100%;transition:opacity .2s, transform .3s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.bubble::before{content:"";position:absolute;left:-7px;bottom:10px;border:7px solid transparent;border-right-color:#FFFFFF;border-left:0}
+.bubble.show{opacity:1;transform:scale(1)}
+.steps .ico{width:46px;height:46px}
+.band h2::after{content:"";display:inline-block;width:.8em;height:.8em;margin-left:.3em;vertical-align:-.05em;background:var(--accent);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cellipse%20cx%3D%2712%27%20cy%3D%2716.5%27%20rx%3D%275.5%27%20ry%3D%274.5%27/%3E%3Ccircle%20cx%3D%275%27%20cy%3D%2710.5%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%279.3%27%20cy%3D%276%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%2714.7%27%20cy%3D%276%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%2719%27%20cy%3D%2710.5%27%20r%3D%272.4%27/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cellipse%20cx%3D%2712%27%20cy%3D%2716.5%27%20rx%3D%275.5%27%20ry%3D%274.5%27/%3E%3Ccircle%20cx%3D%275%27%20cy%3D%2710.5%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%279.3%27%20cy%3D%276%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%2714.7%27%20cy%3D%276%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%2719%27%20cy%3D%2710.5%27%20r%3D%272.4%27/%3E%3C/svg%3E") center/contain no-repeat;transform:rotate(14deg)}
+.sleepcat{display:block;width:170px;max-width:60%;margin:0 auto 6px}
+.sleepcat .zzz text{animation:zz 2.4s ease-in-out infinite}
+.sleepcat .zzz text:nth-child(2){animation-delay:.4s} .sleepcat .zzz text:nth-child(3){animation-delay:.8s}
+@keyframes zz{0%,100%{opacity:.25;transform:translateY(2px)}50%{opacity:1;transform:translateY(-2px)}}
+footer p{margin:0}
+.burst{position:fixed;z-index:60;pointer-events:none;color:var(--accent);font-size:14px;line-height:1;animation:burst .7s ease-out forwards}
+@keyframes burst{to{transform:translate(var(--dx),var(--dy)) scale(.5);opacity:0}}
+@media (max-width:900px){
+  .stage{padding-top:20px}
+  .board .ear{top:-15px;width:34px;height:22px}
+  .board .ear::after{left:10px;right:10px;top:8px}
+  .board .ear.l{left:30px} .board .ear.r{right:30px}
+  .peek{width:44px;left:8px}
+  .bubble{left:54px;bottom:20px;font-size:.82rem;padding:6px 10px;max-width:calc(100% - 70px)}
+}
+
+/* favourites, share and view toggle */
+.presets{padding-block:24px 4px}
+.phead{display:flex;justify-content:space-between;align-items:flex-end;gap:8px 16px;flex-wrap:wrap;margin-bottom:16px}
+.phead h2{font-size:clamp(1.6rem,3.4vw,2.2rem)}
+.phead h2::after{content:"";display:inline-block;width:.8em;height:.8em;margin-left:.3em;vertical-align:-.05em;background:var(--accent);-webkit-mask:var(--paw) center/contain no-repeat;mask:var(--paw) center/contain no-repeat;transform:rotate(14deg)}
+.phead p{margin:0;color:var(--muted);max-width:44ch}
+.pgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.preset{appearance:none;border:0;text-align:left;background:var(--surface);color:var(--fg);border-radius:22px;padding:10px 10px 14px;box-shadow:0 5px 0 var(--line);display:flex;flex-direction:column;gap:3px;cursor:pointer;transition:transform .15s;min-width:0}
+.preset:hover{transform:translateY(-3px) rotate(-1deg)}
+.preset.on{box-shadow:0 0 0 3px var(--accent),0 5px 0 var(--line)}
+.thumb{display:block;width:100%;aspect-ratio:16/10;border-radius:15px;margin-bottom:7px;background:var(--sky);background-image:radial-gradient(var(--surface) 2px, transparent 2.5px);background-size:14px 14px}
+.pname{font-family:var(--font-display);font-weight:600;font-size:1.05rem;line-height:1.2;padding-inline:4px}
+.pnote{font-size:.8rem;color:var(--muted);line-height:1.35;padding-inline:4px}
+.pprice{font-weight:800;color:var(--accent);font-size:.88rem;margin-top:auto;padding:4px 4px 0}
+.tools{position:absolute;right:10px;bottom:10px;display:flex;gap:6px;align-items:center;justify-content:flex-end;flex-wrap:wrap;z-index:4;max-width:calc(100% - 80px)}
+.seg{display:flex;background:#FFFFFF;border-radius:999px;padding:3px;box-shadow:0 3px 0 rgba(75,45,69,.15)}
+.seg button{appearance:none;border:0;background:transparent;color:#4B2D45;font-family:var(--font-display);font-weight:600;font-size:.84rem;padding:5px 11px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:#EE6F9A;color:#FFFFFF}
+.pillbtn{appearance:none;border:0;background:#FFFFFF;color:#4B2D45;font-family:var(--font-display);font-weight:600;font-size:.86rem;padding:7px 14px;border-radius:999px;box-shadow:0 3px 0 rgba(75,45,69,.15);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
+.pillbtn.on{background:#EE6F9A;color:#FFFFFF}
+.sharepop{position:absolute;right:10px;bottom:54px;z-index:5;width:min(330px, calc(100% - 20px));background:#FFFFFF;color:#4B2D45;border-radius:18px;padding:14px 14px 12px;box-shadow:0 10px 28px rgba(75,45,69,.28);display:flex;flex-direction:column;gap:8px}
+.sharepop b{font-family:var(--font-display);font-weight:600;font-size:1.05rem}
+.sharepop span{font-size:.82rem;color:#8C6A82}
+.sharerow{display:flex;gap:8px}
+.sharepop .textin{background:#FDF1F4;border:2px solid #F2D3DE;color:#4B2D45;padding:7px 10px;font-size:.8rem;min-width:0;flex:1;border-radius:12px}
+.sharepop .x{position:absolute;top:6px;right:10px;border:0;background:transparent;font-size:1.4rem;line-height:1;color:#8C6A82;cursor:pointer}
+.canvas-box.worn .peek{display:none}
+.canvas-box.worn .bubble{left:14px;top:14px;bottom:auto;transform-origin:0% 0%}
+.canvas-box.worn .bubble::before{display:none}
+.bubble{bottom:54px}
+@media (max-width:1000px){ .pgrid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:900px){
+  .bubble{bottom:46px}
+  .tools{right:8px;bottom:8px;gap:4px}
+  .seg button{font-size:.74rem;padding:4px 8px}
+  .pillbtn{font-size:.78rem;padding:6px 10px}
+  .sharepop{bottom:44px}
+}
+@media (max-width:600px){
+  .pgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:4px 2px 12px;margin-inline:-2px;scrollbar-width:none}
+  .pgrid::-webkit-scrollbar{display:none}
+  .preset{flex:0 0 64%;scroll-snap-align:start}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#design">
+      <svg viewBox="0 0 100 92" aria-hidden="true"><defs><clipPath id="logoClip"><ellipse cx="50" cy="56" rx="40" ry="33"/></clipPath></defs>
+<path d="M14 42L18 5l27 21z" fill="#B07A4F" stroke="#4B2D45" stroke-width="4" stroke-linejoin="round"/><path d="M86 42L82 5 55 26z" fill="#FFFFFF" stroke="#4B2D45" stroke-width="4" stroke-linejoin="round"/>
+<path d="M21 33l2-18 13 11z" fill="#F2A7BC"/><path d="M79 33l-2-18-13 11z" fill="#F2A7BC"/>
+<ellipse cx="50" cy="56" rx="40" ry="33" fill="#FFFFFF"/><path clip-path="url(#logoClip)" d="M8 52C12 28 34 22 45 33c4 12-8 26-34 30z" fill="#B07A4F"/>
+<ellipse cx="50" cy="56" rx="40" ry="33" fill="none" stroke="#4B2D45" stroke-width="4"/>
+<ellipse cx="36" cy="56" rx="5" ry="6.5" fill="#2A1A28"/><ellipse cx="64" cy="56" rx="5" ry="6.5" fill="#2A1A28"/><circle cx="38" cy="53" r="2" fill="#fff"/><circle cx="66" cy="53" r="2" fill="#fff"/>
+<ellipse cx="25" cy="68" rx="6" ry="3.5" fill="#F2A7BC"/><ellipse cx="75" cy="68" rx="6" ry="3.5" fill="#F2A7BC"/>
+<path d="M47 64h6l-3 3z" fill="#E7799E" stroke="#E7799E" stroke-width="2" stroke-linejoin="round"/><path d="M50 67q-2 5-7 3M50 67q2 5 7 3" stroke="#4B2D45" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+      <b>Little Stitch Studio</b>
+    </a>
+    <nav aria-label="Main">
+      <a href="#design">Design yours</a>
+      <a href="#favourites">Favourites</a>
+      <a href="#process">How it's made</a>
+      <a href="#care">Care</a>
+      <a href="#order">Order</a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <div>
+      <h1>Design a scarf, <span>we'll knit it</span> just for you</h1>
+      <p>Pick your yarn, colours, stitch, size and whether it ends in a fringe or pom-poms. Watch it come together on the peg, then we start knitting.</p>
+      <div class="pill">🧶 Made to order · knitted by hand · 1–2 weeks</div>
+    </div>
+    <svg class="mascot" viewBox="0 0 300 220" role="img" aria-label="A playful white and brown cat in a knitted scarf, batting a ball of yarn">
+      <defs>
+        <clipPath id="catBody"><ellipse cx="128" cy="160" rx="54" ry="42"/></clipPath>
+        <clipPath id="catHead"><ellipse cx="140" cy="94" rx="45" ry="39"/></clipPath>
+      </defs>
+      <ellipse cx="160" cy="203" rx="125" ry="11" fill="var(--line)"/>
+      <!-- yarn strand from ball to paw -->
+      <path d="M216 126c14 4 10 22 22 26" stroke="var(--accent)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g class="roll">
+        <circle cx="248" cy="176" r="25" fill="var(--accent)"/>
+        <path d="M227 166c14 4 28 14 34 30M229 186c12-8 26-10 42-4M239 152c6 10 6 30-2 46M257 151c-4 10-2 22 8 34" stroke="var(--surface)" stroke-width="2.5" fill="none" opacity=".6" stroke-linecap="round"/>
+      </g>
+      <g class="bob">
+        <!-- tail -->
+        <g class="tail">
+          <path d="M82 182c-30 0-40-30-26-52 8-12 22-12 22-2 0 8-12 8-14 18-2 12 6 20 20 20" fill="#FFFFFF" stroke="#4B2D45" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M57 130c6-10 20-12 21-1-6 1-12 4-15 9z" fill="#B07A4F"/>
+        </g>
+        <!-- body -->
+        <ellipse cx="128" cy="160" rx="54" ry="42" fill="#FFFFFF"/>
+        <g clip-path="url(#catBody)">
+          <path d="M70 140c20-20 46-22 58-6 8 12-8 26-30 26-14 0-26-6-28-20z" fill="#B07A4F"/>
+          <circle cx="168" cy="196" r="18" fill="#B07A4F"/>
+        </g>
+        <ellipse cx="128" cy="160" rx="54" ry="42" fill="none" stroke="#4B2D45" stroke-width="3"/>
+        <!-- feet -->
+        <ellipse cx="96" cy="198" rx="17" ry="9" fill="#FFFFFF" stroke="#4B2D45" stroke-width="3"/>
+        <ellipse cx="142" cy="199" rx="15" ry="8.5" fill="#FFFFFF" stroke="#4B2D45" stroke-width="3"/>
+        <path d="M137 197v4M143 197v4M91 196v4M98 196v4" stroke="#4B2D45" stroke-width="2" stroke-linecap="round"/>
+        <!-- batting paw -->
+        <g class="paw">
+          <path d="M160 150c14-8 30-16 46-24" stroke="#4B2D45" stroke-width="21" stroke-linecap="round"/>
+          <path d="M160 150c14-8 30-16 46-24" stroke="#FFFFFF" stroke-width="15" stroke-linecap="round"/>
+          <circle cx="209" cy="124" r="5" fill="#F2A7BC"/>
+        </g>
+        <!-- ears -->
+        <path d="M104 78l4-40 30 22z" fill="#B07A4F" stroke="#4B2D45" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M110 70l3-22 15 12z" fill="#F2A7BC"/>
+        <path d="M150 60l26-22 2 40z" fill="#FFFFFF" stroke="#4B2D45" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M157 60l15-12 1 20z" fill="#F2A7BC"/>
+        <!-- head -->
+        <ellipse cx="140" cy="94" rx="45" ry="39" fill="#FFFFFF"/>
+        <g clip-path="url(#catHead)">
+          <path d="M92 60c18-6 34 4 34 22 0 16-12 26-34 26z" fill="#B07A4F"/>
+          <ellipse cx="166" cy="60" rx="16" ry="10" fill="#D2A27A"/>
+        </g>
+        <ellipse cx="140" cy="94" rx="45" ry="39" fill="none" stroke="#4B2D45" stroke-width="3"/>
+        <g class="blink">
+          <ellipse cx="124" cy="95" rx="6.5" ry="8" fill="#2A1A28"/><ellipse cx="157" cy="95" rx="6.5" ry="8" fill="#2A1A28"/>
+          <circle cx="126.5" cy="91.5" r="2.4" fill="#fff"/><circle cx="159.5" cy="91.5" r="2.4" fill="#fff"/>
+        </g>
+        <ellipse cx="112" cy="108" rx="7" ry="4" fill="#F2A7BC" opacity=".8"/>
+        <ellipse cx="170" cy="108" rx="7" ry="4" fill="#F2A7BC" opacity=".8"/>
+        <path d="M137 104h8l-4 4z" fill="#E7799E" stroke="#E7799E" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M141 108q-3 6-8 3M141 108q3 6 8 3" stroke="#4B2D45" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M100 102l-16-3M100 108l-15 2M182 102l16-3M182 108l15 2" stroke="#4B2D45" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
+        <!-- scarf -->
+        <g class="swing">
+          <rect x="114" y="132" width="15" height="40" rx="5" fill="var(--accent)"/>
+          <rect x="114" y="144" width="15" height="5" fill="var(--butter)"/><rect x="114" y="156" width="15" height="5" fill="var(--butter)"/>
+          <path d="M117 172v8M121 172v9M125 172v8" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <rect x="104" y="124" width="74" height="16" rx="8" fill="var(--accent)"/>
+        <path d="M112 128v8M120 128v8M128 128v8M136 128v8M144 128v8M152 128v8M160 128v8M168 128v8" stroke="var(--butter)" stroke-width="2" opacity=".7"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="presets" id="favourites" aria-label="Ready-made designs">
+    <div class="phead">
+      <h2>Not sure where to start?</h2>
+      <p>Tap a favourite to load it into the designer, then change anything you like.</p>
+    </div>
+    <div class="pgrid" id="presetGrid"></div>
+  </section>
+
+  <section class="designer" id="design" aria-label="Scarf designer">
+    <div class="stage">
+      <div class="board stitched">
+        <span class="ear l" aria-hidden="true"></span><span class="ear r" aria-hidden="true"></span>
+        <div class="canvas-box" id="canvasBox"><canvas id="scarf" role="img" aria-label="Preview of your scarf hanging on a peg, with a close-up of the stitches"></canvas>
+          <div class="peek" id="peek" title="Pet the kitty"><svg viewBox="0 0 100 92" aria-hidden="true"><defs><clipPath id="peekClip"><ellipse cx="50" cy="56" rx="40" ry="33"/></clipPath></defs>
+<path d="M14 42L18 5l27 21z" fill="#B07A4F" stroke="#4B2D45" stroke-width="4" stroke-linejoin="round"/><path d="M86 42L82 5 55 26z" fill="#FFFFFF" stroke="#4B2D45" stroke-width="4" stroke-linejoin="round"/>
+<path d="M21 33l2-18 13 11z" fill="#F2A7BC"/><path d="M79 33l-2-18-13 11z" fill="#F2A7BC"/>
+<ellipse cx="50" cy="56" rx="40" ry="33" fill="#FFFFFF"/><path clip-path="url(#peekClip)" d="M8 52C12 28 34 22 45 33c4 12-8 26-34 30z" fill="#B07A4F"/>
+<ellipse cx="50" cy="56" rx="40" ry="33" fill="none" stroke="#4B2D45" stroke-width="4"/>
+<ellipse cx="36" cy="56" rx="5" ry="6.5" fill="#2A1A28"/><ellipse cx="64" cy="56" rx="5" ry="6.5" fill="#2A1A28"/><circle cx="38" cy="53" r="2" fill="#fff"/><circle cx="66" cy="53" r="2" fill="#fff"/>
+<ellipse cx="25" cy="68" rx="6" ry="3.5" fill="#F2A7BC"/><ellipse cx="75" cy="68" rx="6" ry="3.5" fill="#F2A7BC"/>
+<path d="M47 64h6l-3 3z" fill="#E7799E" stroke="#E7799E" stroke-width="2" stroke-linejoin="round"/><path d="M50 67q-2 5-7 3M50 67q2 5 7 3" stroke="#4B2D45" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="bubble" id="bubble" aria-hidden="true"></div>
+          <div class="tools">
+            <div class="seg" role="group" aria-label="Preview">
+              <button type="button" id="viewPeg" aria-pressed="true">On the peg</button>
+              <button type="button" id="viewCat" aria-pressed="false">On the kitty</button>
+            </div>
+            <button type="button" class="pillbtn" id="shareBtn">Share</button>
+          </div>
+          <div class="sharepop" id="sharePop" hidden>
+            <b>Share this design</b>
+            <span>Anyone with this link sees your exact scarf.</span>
+            <div class="sharerow"><input id="shareLink" class="textin" readonly aria-label="Link to this design"><button type="button" class="pillbtn on" id="copyLink">Copy</button></div>
+            <a class="pillbtn" id="waShare" target="_blank" rel="noopener">Send on WhatsApp</a>
+            <button type="button" class="x" id="shareClose" aria-label="Close">×</button>
+          </div></div>
+        <div class="dims"><span>Size <b id="dimText">180 × 22 cm</b></span><span id="wtText">Medium yarn · about 150 g</span></div>
+      </div>
+      <div class="quote stitched">
+        <div>
+          <div class="price" id="price">₹0</div>
+          <div class="eta">Ships by <b id="eta">—</b> · <span id="days">—</span> days of knitting</div>
+        </div>
+        <a class="btn" href="#order">Order this ♥</a>
+        <details>
+          <summary>Price breakdown</summary>
+          <div class="breakdown" id="breakdown"></div>
+        </details>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="group stitched">
+        <h3>Scarf style</h3>
+        <div class="opts grid2" id="styleOpts"></div>
+      </div>
+
+      <div class="group stitched">
+        <h3>Pick your yarn</h3>
+        <div class="opts grid3" id="woolOpts"></div>
+      </div>
+
+      <div class="group stitched">
+        <h3>Yarn thickness</h3>
+        <div class="opts grid3" id="yarnOpts"></div>
+      </div>
+
+      <div class="group stitched">
+        <h3>How big?</h3>
+        <div class="opts grid2" id="sizeOpts"></div>
+        <div class="range"><label for="len" id="lenLabel">Length</label><input type="range" id="len" min="100" max="240" step="5"><output id="lenOut">180 cm</output></div>
+        <div class="range"><label for="wid">Width</label><input type="range" id="wid" min="12" max="45" step="1"><output id="widOut">22 cm</output></div>
+      </div>
+
+      <div class="group stitched">
+        <h3>Main colour <output id="baseName"></output></h3>
+        <div class="swatches" id="baseSw"></div>
+      </div>
+
+      <div class="group stitched">
+        <h3>Pop colour <output id="accentName"></output></h3>
+        <div class="swatches" id="accentSw"></div>
+        <p class="hint" id="accentHint"></p>
+      </div>
+
+      <div class="group stitched">
+        <h3>Stitch pattern</h3>
+        <div class="opts" id="patternOpts"></div>
+      </div>
+
+      <div class="group stitched">
+        <h3>Scarf ends</h3>
+        <div class="opts" id="fringeOpts"></div>
+        <div class="range" id="fringeRange"><label for="flen">Length</label><input type="range" id="flen" min="4" max="15" step="1"><output id="flenOut">8 cm</output></div>
+        <p class="hint" id="loopHint" hidden>Infinity loops are joined in a circle, so they have no ends.</p>
+      </div>
+
+      <div class="group stitched">
+        <h3>Name tag <output>+₹250</output></h3>
+        <input class="textin" id="initials" maxlength="3" placeholder="Initials for a sewn-on tag, like MN" autocomplete="off" aria-label="Initials for the sewn-on tag">
+        <label class="check"><input type="checkbox" id="gift"> Wrap it in a gift box with a ribbon (+₹200)</label>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="band" id="process">
+  <div class="wrap">
+    <h2>From yarn to your doorstep</h2>
+    <ol class="steps">
+      <li><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="9" width="24" height="31" rx="4" fill="var(--surface)" stroke="var(--fg)" stroke-width="2.5"/><rect x="18" y="5" width="12" height="7" rx="3" fill="var(--accent)" stroke="var(--fg)" stroke-width="2"/><path d="M24 33c-6-4-8-7-6-10 1.5-2.2 4.5-2 6 0 1.5-2 4.5-2.2 6 0 2 3 0 6-6 10z" fill="var(--accent)"/></svg><span class="day">Day 1</span><b>We check your design</b><p>A knitter looks over your choices and confirms colours and size with you.</p></li>
+      <li><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="23" cy="25" r="14" fill="var(--accent)" stroke="var(--fg)" stroke-width="2.5"/><path d="M12 19c8 1 16 7 19 17M11 29c7-5 15-6 24-3M18 12c4 6 4 18-1 26" stroke="var(--surface)" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M35 33c5 2 8 6 5 10" stroke="var(--fg)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span class="day">Day 2</span><b>Yarn is wound</b><p>Your two colours are picked and wound into soft, ready-to-knit balls.</p></li>
+      <li><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 40L36 10M38 40L12 10" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><circle cx="37" cy="9" r="4" fill="var(--accent)" stroke="var(--fg)" stroke-width="2"/><circle cx="11" cy="9" r="4" fill="var(--accent)" stroke="var(--fg)" stroke-width="2"/><path d="M14 33q10 7 20 0" stroke="var(--accent)" stroke-width="6" fill="none" stroke-linecap="round"/></svg><span class="day">Days 3–9</span><b>Knitting by hand</b><p>Stitch by stitch on needles. Cables and hearts take a couple of days more.</p></li>
+      <li><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="20" cy="28" r="10" fill="var(--surface)" stroke="var(--fg)" stroke-width="2.5"/><circle cx="34" cy="16" r="6" fill="var(--surface)" stroke="var(--fg)" stroke-width="2.5"/><circle cx="36" cy="35" r="4" fill="var(--surface)" stroke="var(--fg)" stroke-width="2.5"/><path d="M14 25a7 7 0 0 1 6-4" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span class="day">Day 10</span><b>Washed and shaped</b><p>The scarf is gently washed and laid flat so the stitches settle evenly.</p></li>
+      <li><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="21" width="30" height="20" rx="3" fill="var(--surface)" stroke="var(--fg)" stroke-width="2.5"/><rect x="7" y="15" width="34" height="8" rx="2" fill="var(--accent)" stroke="var(--fg)" stroke-width="2.5"/><path d="M24 15v26" stroke="var(--fg)" stroke-width="2.5"/><path d="M24 15c-3-7-11-7-9-2 1 2 6 2 9 2zM24 15c3-7 11-7 9-2-1 2-6 2-9 2z" fill="var(--accent)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/></svg><span class="day">Day 11+</span><b>Finished and sent</b><p>Fringe or pom-poms added, name tag sewn on, wrapped up and shipped.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band" id="care">
+  <div class="wrap two">
+    <div class="card stitched">
+      <h2>Keep it soft</h2>
+      <ul class="care">
+        <li><span>Wash</span><div>Hand wash in cold water with a gentle wool or baby shampoo. No wringing or twisting.</div></li>
+        <li><span>Dry</span><div>Roll it in a towel to press out water, then dry flat in the shade so it keeps its shape.</div></li>
+        <li><span>Hang?</span><div>Don't hang a wet scarf. Knits stretch long when they're heavy with water.</div></li>
+        <li><span>Fuzz</span><div>A little pilling at first is normal. Lift it gently with a wool comb.</div></li>
+      </ul>
+    </div>
+    <div class="card stitched faq">
+      <h2>Little questions</h2>
+      <details><summary>Is it itchy?</summary><p>Merino and alpaca blend are soft enough for sensitive necks. Lambswool is cosy but can feel a little scratchy on bare skin.</p></details>
+      <details><summary>Will the colour match the preview?</summary><p>Close, but not exact. Screens show colours differently. We send you a photo of your yarn before knitting starts, so you can ask for a change.</p></details>
+      <details><summary>Can I return a made-to-order scarf?</summary><p>Each scarf is knitted just for you, so we can't take returns for a change of mind. If there's a dropped stitch or other fault, we fix it.</p></details>
+      <details><summary>Can you knit a matching hat or a kids' size?</summary><p>Yes! Write it in the notes when you order and we'll quote before starting.</p></details>
+      <details><summary>How do I pay?</summary><p>Once we confirm your design, we send a payment link. Knitting starts after the advance arrives.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="order">
+  <div class="wrap order">
+    <div class="your stitched">
+      <h2>Your scarf</h2>
+      <dl id="summaryList"></dl>
+      <a class="btn ghost" href="#design">Change design</a>
+    </div>
+
+    <div class="formcard stitched">
+      <form id="orderForm" novalidate>
+        <h2>Almost there!</h2>
+        <div class="row2">
+          <div class="field"><label for="fname">Your name</label><input class="textin" id="fname" autocomplete="name" required></div>
+          <div class="field"><label for="fphone">Phone / WhatsApp</label><input class="textin" id="fphone" type="tel" autocomplete="tel" required></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="femail">Email</label><input class="textin" id="femail" type="email" autocomplete="email"></div>
+          <div class="field"><label for="fcity">City and PIN code</label><input class="textin" id="fcity" autocomplete="address-level2" required></div>
+        </div>
+        <div class="field"><label for="fnotes">Note for the knitter (optional)</label><textarea class="textin" id="fnotes" rows="3" placeholder="Is it a gift? Need it by a date? Tell us!"></textarea></div>
+        <p class="err" id="formErr" role="alert"></p>
+        <button class="btn" type="submit">Send my order request ♥</button>
+      </form>
+
+      <div class="done" id="done" hidden>
+        <h2>Yay! Your order is ready</h2>
+        <p style="margin:0">Your reference is <b id="refOut"></b>. Copy these details and send them to us. We'll confirm your design and share a payment link within one working day.</p>
+        <pre id="orderText"></pre>
+        <div class="acts">
+          <button class="btn" type="button" id="copyBtn">Copy order details</button>
+          <a class="btn ghost" id="waBtn" target="_blank" rel="noopener" hidden>Send on WhatsApp</a>
+          <button class="btn ghost" type="button" id="editBtn">Edit details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <svg class="sleepcat" viewBox="0 0 170 86" aria-hidden="true">
+    <defs><clipPath id="sleepClip"><ellipse cx="78" cy="58" rx="42" ry="20"/></clipPath></defs>
+    <ellipse cx="88" cy="80" rx="72" ry="5" fill="var(--line)"/>
+    <g><circle cx="138" cy="60" r="18" fill="var(--accent)"/><path d="M122 54c10 2 20 9 24 20M124 68c8-6 18-7 30-3M131 44c4 7 4 22-2 32" stroke="var(--surface)" stroke-width="2" fill="none" opacity=".6" stroke-linecap="round"/></g>
+    <ellipse cx="78" cy="58" rx="42" ry="20" fill="#FFFFFF"/>
+    <ellipse clip-path="url(#sleepClip)" cx="96" cy="44" rx="20" ry="12" fill="#B07A4F"/>
+    <ellipse cx="78" cy="58" rx="42" ry="20" fill="none" stroke="#4B2D45" stroke-width="3"/>
+    <path d="M116 62c8 14-12 18-40 16-14-1-24-3-30-8" stroke="#4B2D45" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M116 62c8 14-12 18-40 16-14-1-24-3-30-8" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M30 44l2-18 14 11z" fill="#B07A4F" stroke="#4B2D45" stroke-width="3" stroke-linejoin="round"/><path d="M56 40l6-17 7 15z" fill="#FFFFFF" stroke="#4B2D45" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="48" cy="54" r="19" fill="#FFFFFF" stroke="#4B2D45" stroke-width="3"/>
+    <path d="M38 54q4 3 8 0M51 54q4 3 8 0" stroke="#4B2D45" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <ellipse cx="36" cy="61" rx="4" ry="2.5" fill="#F2A7BC"/><ellipse cx="61" cy="61" rx="4" ry="2.5" fill="#F2A7BC"/>
+    <path d="M46.5 59h4l-2 2z" fill="#E7799E"/>
+    <g class="zzz" fill="var(--accent)" font-family="Fredoka, 'Trebuchet MS', sans-serif" font-weight="600"><text x="14" y="34" font-size="11">z</text><text x="6" y="22" font-size="14">z</text><text x="16" y="10" font-size="17">Z</text></g>
+  </svg>
+  <p>Little Stitch Studio · knitted slowly, with love · prices include GST · free shipping in India</p>
+</div></footer>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+
+<script>
+// Set your WhatsApp business number (country code, digits only, e.g. "919820000000") to enable the WhatsApp button.
+const WHATSAPP_NUMBER = "";
+
+const STYLES = [
+  {id:"straight", name:"Classic scarf", note:"Two ends to wrap and toss"},
+  {id:"infinity", name:"Infinity loop", note:"Joined circle, slips on"},
+];
+const WOOLS = [
+  {id:"lamb", name:"Lambswool", note:"Warm, everyday", rate:3200, days:0, fuzz:12},
+  {id:"merino", name:"Merino", note:"Soft, not itchy", rate:4200, days:0, fuzz:8},
+  {id:"alpaca", name:"Alpaca blend", note:"Extra fluffy", rate:6500, days:2, fuzz:40},
+];
+const YARNS = [
+  {id:"fine", name:"Fine", note:"Light & drapey", sw:.45, rh:.55, mul:1, gsm:260, days:3},
+  {id:"medium", name:"Medium", note:"Everyday cosy", sw:.6, rh:.75, mul:1, gsm:380, days:0},
+  {id:"chunky", name:"Chunky", note:"Big & squishy", sw:1.0, rh:1.2, mul:1.15, gsm:600, days:-2},
+];
+const SIZES = {
+  straight: [
+    {id:"kids", name:"Kids", l:120, w:14},
+    {id:"skinny", name:"Skinny", l:160, w:15},
+    {id:"classic", name:"Classic", l:180, w:22},
+    {id:"wide", name:"Cosy wide", l:200, w:32},
+  ],
+  infinity: [
+    {id:"kids", name:"Kids loop", l:110, w:16},
+    {id:"skinny", name:"Single loop", l:140, w:20},
+    {id:"classic", name:"Double loop", l:170, w:25},
+    {id:"wide", name:"Big cowl", l:190, w:35},
+  ],
+};
+const DYES = [
+  {id:"ivory",name:"Cloud white",hex:"#EFE8DA"},
+  {id:"blush",name:"Blush",hex:"#F2B8C6"},
+  {id:"bubblegum",name:"Bubblegum",hex:"#E7799E"},
+  {id:"peach",name:"Peach",hex:"#F4B08E"},
+  {id:"butter",name:"Butter",hex:"#F2D57E"},
+  {id:"mint",name:"Mint",hex:"#9ED8BF"},
+  {id:"sage",name:"Sage",hex:"#7F9C7E"},
+  {id:"sky",name:"Sky",hex:"#9CC8E8"},
+  {id:"lavender",name:"Lavender",hex:"#B8A5DE"},
+  {id:"berry",name:"Berry",hex:"#8E2F57"},
+  {id:"navy",name:"Night blue",hex:"#2B3A62"},
+  {id:"cocoa",name:"Cocoa",hex:"#5E4033"},
+];
+const PATTERNS = [
+  {id:"classic", name:"Classic knit", add:0, days:0, uses:"tips"},
+  {id:"ribbed", name:"Ribbed", add:200, days:1, uses:"tips"},
+  {id:"seed", name:"Seed stitch", add:250, days:1, uses:"tips"},
+  {id:"stripes", name:"Stripes", add:300, days:1, uses:"stripes"},
+  {id:"cable", name:"Cable knit", add:600, days:3, uses:"tips"},
+  {id:"hearts", name:"Little hearts", add:700, days:4, uses:"hearts"},
+];
+const FRINGES = [
+  {id:"none", name:"Neat edge", add:0},
+  {id:"fringe", name:"Fringe", add:150},
+  {id:"tassels", name:"Chunky tassels", add:250},
+  {id:"pompoms", name:"Pom-poms", add:300},
+];
+const HEART = ["0110110","1111111","1111111","0111110","0011100","0001000"];
+
+const DEFAULT = {style:"straight", wool:"merino", yarn:"medium", size:"classic", length:180, width:22,
+  base:"blush", accent:"berry", pattern:"hearts", fringe:"pompoms", fringeLen:8, initials:"", gift:false};
+let state = {...DEFAULT};
+try {
+  const saved = JSON.parse(localStorage.getItem("bunai-design") || "null");
+  if (saved) state = {...DEFAULT, ...saved};
+} catch(e) {}
+
+const $ = id => document.getElementById(id);
+const find = (arr, id) => arr.find(x => x.id === id) || arr[0];
+const inr = n => "₹" + Math.round(n).toLocaleString("en-IN");
+const sizes = () => SIZES[state.style];
+
+function optButtons(el, items, key, sub){
+  el.innerHTML = "";
+  items.forEach(it => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "opt"; b.dataset.id = it.id; b.id = key + "-" + it.id;
+    b.innerHTML = `<span>${it.name}</span>` + (sub ? `<small>${sub(it)}</small>` : "");
+    b.addEventListener("click", () => { set(key, it.id); burst(b); react(key, it.id); });
+    el.appendChild(b);
+  });
+}
+function swatches(el, key){
+  el.innerHTML = "";
+  DYES.forEach(d => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "sw"; b.dataset.id = d.id; b.id = key + "-" + d.id;
+    b.style.setProperty("--c", d.hex); b.title = d.name; b.setAttribute("aria-label", d.name);
+    b.addEventListener("click", () => { set(key, d.id); burst(b); react(key, d.id); });
+    el.appendChild(b);
+  });
+}
+function buildSizes(){ optButtons($("sizeOpts"), sizes(), "size", s => `${s.l} × ${s.w} cm`); }
+
+optButtons($("styleOpts"), STYLES, "style", s => s.note);
+optButtons($("woolOpts"), WOOLS, "wool", w => w.note);
+optButtons($("yarnOpts"), YARNS, "yarn", y => y.note);
+buildSizes();
+optButtons($("patternOpts"), PATTERNS, "pattern", p => p.add ? "+" + inr(p.add) : "Included");
+optButtons($("fringeOpts"), FRINGES, "fringe", f => f.add ? "+" + inr(f.add) : "Included");
+swatches($("baseSw"), "base");
+swatches($("accentSw"), "accent");
+
+function set(key, val){
+  state[key] = val;
+  if (key === "style"){
+    buildSizes();
+    const s = find(sizes(), state.size === "custom" ? "classic" : state.size);
+    state.size = s.id; state.length = s.l; state.width = s.w;
+  }
+  if (key === "size"){ const s = find(sizes(), val); state.length = s.l; state.width = s.w; }
+  if (key === "length" || key === "width"){
+    const m = sizes().find(s => s.l === state.length && s.w === state.width);
+    state.size = m ? m.id : "custom";
+  }
+  update(!["length","width","fringeLen","initials"].includes(key));
+}
+
+$("len").addEventListener("input", e => set("length", +e.target.value));
+$("wid").addEventListener("input", e => set("width", +e.target.value));
+$("flen").addEventListener("input", e => set("fringeLen", +e.target.value));
+$("initials").addEventListener("input", e => {
+  const v = e.target.value.toUpperCase().replace(/[^A-Z.]/g, "").slice(0,3);
+  if (e.target.value !== v) e.target.value = v;
+  set("initials", v);
+});
+$("gift").addEventListener("change", e => { set("gift", e.target.checked); react("gift", e.target.checked); });
+
+function quote(){
+  const wool = find(WOOLS, state.wool), yarn = find(YARNS, state.yarn);
+  const pat = find(PATTERNS, state.pattern), fr = find(FRINGES, state.fringe);
+  const area = state.length * state.width / 10000;
+  const base = Math.round(area * wool.rate * yarn.mul / 10) * 10;
+  const lines = [[`${wool.name}, ${yarn.name.toLowerCase()} yarn`, base]];
+  if (state.style === "infinity") lines.push(["Joining into a loop", 100]);
+  if (pat.add) lines.push([pat.name, pat.add]);
+  if (state.style === "straight" && fr.add) lines.push([fr.name, fr.add]);
+  if (state.initials) lines.push([`Name tag “${state.initials}”`, 250]);
+  if (state.gift) lines.push(["Gift box", 200]);
+  const total = lines.reduce((s, l) => s + l[1], 0);
+  const days = Math.max(6, 8 + wool.days + yarn.days + pat.days + (state.initials ? 1 : 0));
+  const grams = Math.round(area * yarn.gsm / 10) * 10;
+  return {lines, total, days, grams};
+}
+
+function summaryRows(){
+  const wool = find(WOOLS, state.wool), yarn = find(YARNS, state.yarn);
+  const sizeName = state.size === "custom" ? "Custom" : find(sizes(), state.size).name;
+  const fr = find(FRINGES, state.fringe);
+  const ends = state.style === "infinity" ? "Joined loop" : (state.fringe === "fringe" || state.fringe === "tassels") ? `${fr.name}, ${state.fringeLen} cm` : fr.name;
+  return [
+    ["Style", find(STYLES, state.style).name],
+    ["Yarn", `${wool.name}, ${yarn.name.toLowerCase()}`],
+    ["Size", `${state.length} × ${state.width} cm (${sizeName})`],
+    ["Colours", `${find(DYES, state.base).name} with ${find(DYES, state.accent).name}`],
+    ["Stitch", find(PATTERNS, state.pattern).name],
+    ["Ends", ends],
+    ["Name tag", state.initials || "None"],
+    ["Gift box", state.gift ? "Yes" : "No"],
+  ];
+}
+
+let rafId = 0, wantPop = false, saveTimer = 0;
+function update(pop){
+  wantPop = wantPop || pop;
+  if (!rafId) rafId = requestAnimationFrame(() => { rafId = 0; const p = wantPop; wantPop = false; render(p); });
+}
+function render(pop){
+  document.querySelectorAll("[data-id]").forEach(b => {
+    const key = b.id.split("-")[0];
+    if (key in state) b.setAttribute("aria-pressed", String(state[key] === b.dataset.id));
+  });
+  const loop = state.style === "infinity";
+  $("len").value = state.length; $("wid").value = state.width; $("flen").value = state.fringeLen;
+  $("lenLabel").textContent = loop ? "Around" : "Length";
+  $("lenOut").textContent = state.length + " cm"; $("widOut").textContent = state.width + " cm";
+  $("flenOut").textContent = state.fringeLen + " cm";
+  document.querySelectorAll("#fringeOpts .opt").forEach(b => b.disabled = loop);
+  $("loopHint").hidden = !loop;
+  $("fringeRange").hidden = loop || !(state.fringe === "fringe" || state.fringe === "tassels");
+  if ($("initials").value !== state.initials) $("initials").value = state.initials;
+  $("gift").checked = state.gift;
+  $("baseName").textContent = find(DYES, state.base).name;
+  $("accentName").textContent = find(DYES, state.accent).name;
+  const uses = find(PATTERNS, state.pattern).uses;
+  $("accentHint").textContent = state.base === state.accent ? "Both colours are the same, so your scarf will be one solid colour."
+    : uses === "stripes" ? "Used for the stripes" + (state.style === "straight" && state.fringe === "pompoms" ? " and pom-poms." : ".")
+    : uses === "hearts" ? "Used for the little hearts" + (state.style === "straight" && state.fringe === "pompoms" ? " and pom-poms." : ".")
+    : loop ? "Used for the edges of the loop." : "Used for the tipped ends" + (state.fringe === "pompoms" ? " and pom-poms." : ".");
+
+  const q = quote();
+  markPresets();
+  if (!$("sharePop").hidden) fillShare();
+  $("price").textContent = inr(q.total);
+  $("days").textContent = q.days;
+  const d = new Date(); d.setDate(d.getDate() + q.days + 1);
+  $("eta").textContent = d.toLocaleDateString("en-IN", {day:"numeric", month:"short"});
+  $("breakdown").innerHTML = q.lines.map(l => `<span>${l[0]}</span><span>${inr(l[1])}</span>`).join("")
+    + `<span><b>Total</b></span><span><b>${inr(q.total)}</b></span>`;
+  $("dimText").textContent = loop ? `${state.length} cm around × ${state.width} cm` : `${state.length} × ${state.width} cm`;
+  $("wtText").textContent = `${find(YARNS, state.yarn).name} yarn · about ${q.grams} g`;
+  $("summaryList").innerHTML = summaryRows().map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("")
+    + `<dt>Estimate</dt><dd><b>${inr(q.total)}</b> · ships in about ${q.days + 1} days</dd>`;
+
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { try { localStorage.setItem("bunai-design", JSON.stringify(state)); } catch(e) {} }, 400);
+  draw();
+  if (pop){ canvas.classList.remove("pop"); void canvas.offsetWidth; canvas.classList.add("pop"); }
+}
+
+/* ---------- drawing ---------- */
+// The scarf is drawn into an offscreen layer only when its look changes; each stitch is a
+// pre-rendered sprite; and all redraws are batched to one per animation frame.
+const canvas = $("scarf"), mainCtx = canvas.getContext("2d");
+const layer = document.createElement("canvas"), layerCtx = layer.getContext("2d");
+let ctx = layerCtx;
+let DPR = 1, CW = 0, CH = 0, sizeDirty = true, lastKey = "", geom = null, view = "peg";
+
+function makeNoise(alpha){
+  const c = document.createElement("canvas"); c.width = c.height = 96;
+  const x = c.getContext("2d"), img = x.createImageData(96, 96);
+  for (let i = 0; i < img.data.length; i += 4){
+    img.data[i] = img.data[i+1] = img.data[i+2] = 255; img.data[i+3] = Math.random() < .5 ? Math.random() * alpha : 0;
+  }
+  x.putImageData(img, 0, 0); return c;
+}
+const noises = {};
+const shadeCache = new Map();
+function shade(hex, amt){
+  const k = hex + amt; const hit = shadeCache.get(k); if (hit) return hit;
+  const n = parseInt(hex.slice(1), 16);
+  const f = v => Math.max(0, Math.min(255, Math.round(v + (amt < 0 ? v * amt : (255 - v) * amt))));
+  const out = "#" + [n>>16, (n>>8)&255, n&255].map(f).map(v => v.toString(16).padStart(2,"0")).join("");
+  shadeCache.set(k, out); return out;
+}
+
+function stitchOpts(C, base, acc){
+  const across = Math.max(1, Math.floor(C / 10));
+  return {p: state.pattern, loop: state.style === "infinity", tips: find(PATTERNS, state.pattern).uses === "tips",
+    across, margin: Math.floor((C - across * 10) / 2), base, acc};
+}
+// What colour and stitch type sits at column c, scarf row r (0 = one end), display row dr.
+function stitchAt(c, r, dr, C, R, o){
+  let col = o.base, purl = false;
+  if (o.p === "ribbed") purl = (c % 4) >= 2;
+  else if (o.p === "seed") purl = (c + r) % 2 === 1;
+  else if (o.p === "stripes"){ if (Math.floor(r / 5) % 3 === 1) col = o.acc; }
+  else if (o.p === "hearts"){
+    const cc = c - o.margin;
+    if (cc >= 0 && cc < o.across * 10){
+      const tc = cc % 10 - 1, tr = dr % 10 - 2;
+      if (tc >= 0 && tc < 7 && tr >= 0 && tr < 6 && HEART[tr][tc] === "1") col = o.acc;
+    }
+  }
+  if (o.tips && (o.loop ? (c < 2 || c >= C - 2) : (r < 6 || r >= R - 6))) col = o.acc;
+  return purl ? (col === o.base ? 1 : 3) : (col === o.base ? 0 : 2);
+}
+
+// One knit "V" (or purl bump) drawn once at the current size, then stamped everywhere.
+const sprites = new Map();
+function sprite(col, purl, pw, ph){
+  const key = col + (purl ? "p" : "v") + pw.toFixed(2) + "x" + ph.toFixed(2);
+  let c = sprites.get(key); if (c) return c;
+  if (sprites.size > 80) sprites.clear();
+  const bw = pw * 1.6, bh = ph * 1.6;
+  c = document.createElement("canvas");
+  c.width = Math.max(2, Math.ceil(bw * DPR)); c.height = Math.max(2, Math.ceil(bh * DPR));
+  const g = c.getContext("2d"); g.scale(c.width / bw, c.height / bh);
+  const cx = bw / 2, cy = bh / 2;
+  g.fillStyle = purl ? shade(col, -.14) : col;
+  if (purl){ g.beginPath(); g.ellipse(cx, cy, pw * .44, ph * .36, 0, 0, Math.PI * 2); g.fill(); }
+  else {
+    g.beginPath(); g.ellipse(cx - pw * .22, cy, pw * .27, ph * .66, -.45, 0, Math.PI * 2); g.fill();
+    g.beginPath(); g.ellipse(cx + pw * .22, cy, pw * .27, ph * .66, .45, 0, Math.PI * 2); g.fill();
+  }
+  sprites.set(key, c); return c;
+}
+
+// Fill a rectangle with knit stitches. clip = [yMin, yMax, xMin, xMax] skips stitches out of view.
+function knit(x, y, w, h, C, Rh, rowOf, R, base, acc, clip){
+  const pw = w / C, ph = h / Rh, bw = pw * 1.6, bh = ph * 1.6;
+  ctx.fillStyle = shade(base, -.38); ctx.fillRect(x, y, w, h);
+  const o = stitchOpts(C, base, acc);
+  const kinds = [sprite(base, false, pw, ph), sprite(base, true, pw, ph), sprite(acc, false, pw, ph), sprite(acc, true, pw, ph)];
+  let c0 = 0, c1 = C;
+  if (clip && clip.length > 2){ c0 = Math.max(0, Math.floor((clip[2] - x) / pw) - 1); c1 = Math.min(C, Math.ceil((clip[3] - x) / pw) + 1); }
+  for (let dr = 0; dr < Rh; dr++){
+    const cy = y + dr * ph + ph / 2;
+    if (clip && (cy < clip[0] - ph || cy > clip[1] + ph)) continue;
+    const r = rowOf(dr), top = cy - bh / 2;
+    for (let c = c0; c < c1; c++){
+      ctx.drawImage(kinds[stitchAt(c, r, dr, C, R, o)], x + c * pw + pw / 2 - bw / 2, top, bw, bh);
+    }
+  }
+}
+
+function cables(x, y, w, h, s, base){
+  if (state.pattern !== "cable") return;
+  const n = Math.max(1, Math.round(state.width / 10));
+  const rw = 1.9 * s, step = 2.2 * s;
+  ctx.lineWidth = Math.max(1, .22 * s);
+  const fillC = shade(base, .08), lineC = shade(base, -.35);
+  for (let i = 0; i < n; i++){
+    const cx = x + w * (i + .5) / n;
+    ctx.fillStyle = shade(base, -.3); ctx.fillRect(cx - rw * 1.35, y, rw * .35, h); ctx.fillRect(cx + rw, y, rw * .35, h);
+    let k = 0;
+    for (let yy = y + step / 2; yy < y + h; yy += step, k++){
+      ctx.beginPath(); ctx.ellipse(cx, yy, rw, step * .78, k % 2 ? .55 : -.55, 0, Math.PI * 2);
+      ctx.fillStyle = fillC; ctx.fill(); ctx.strokeStyle = lineC; ctx.stroke();
+    }
+  }
+}
+
+function roundTop(x, y, w, h, r){
+  ctx.beginPath(); ctx.moveTo(x, y + h); ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h); ctx.closePath();
+}
+
+function drawEnds(sx, by, sw, s, base, acc, yarn){
+      if (state.fringe === "pompoms"){
+        const n = state.width > 26 ? 3 : 2, pr = (yarn.id === "chunky" ? 3.2 : 2.7) * s;
+        for (let i = 0; i < n; i++){
+          const px = sx + sw * (i + .5) / n, py = by + 3.6 * s + pr;
+          ctx.strokeStyle = shade(acc, -.2); ctx.lineWidth = Math.max(1, .3 * s);
+          ctx.beginPath(); ctx.moveTo(px, by - 1); ctx.lineTo(px, py); ctx.stroke();
+          ctx.fillStyle = acc; ctx.beginPath(); ctx.arc(px, py, pr, 0, 7); ctx.fill();
+          ctx.strokeStyle = shade(acc, -.18); ctx.lineWidth = Math.max(1, .18 * s);
+          for (let k = 0; k < 26; k++){
+            const a = k / 26 * Math.PI * 2, r1 = pr * .55, r2 = pr * (1.05 + (k % 3) * .06);
+            ctx.beginPath(); ctx.moveTo(px + Math.cos(a) * r1, py + Math.sin(a) * r1); ctx.lineTo(px + Math.cos(a) * r2, py + Math.sin(a) * r2); ctx.stroke();
+          }
+          ctx.fillStyle = "rgba(255,255,255,.35)"; ctx.beginPath(); ctx.arc(px - pr * .35, py - pr * .35, pr * .3, 0, 7); ctx.fill();
+        }
+      } else {
+        const len = state.fringeLen * s, chunky = state.fringe === "tassels";
+        const step = (chunky ? 3.2 : 1.6) * s;
+        let k = 0;
+        for (let fx = sx + step / 2; fx < sx + sw; fx += step, k++){
+          const col = k % 3 === 1 ? acc : shade(base, -.06);
+          ctx.strokeStyle = col; ctx.lineCap = "round"; ctx.lineWidth = Math.max(1, (chunky ? .4 : .32) * s);
+          const strands = chunky ? 5 : 3;
+          for (let j = 0; j < strands; j++){
+            const off = (j - (strands - 1) / 2) * .28 * s;
+            ctx.beginPath(); ctx.moveTo(fx + off * .4, by - 1);
+            ctx.quadraticCurveTo(fx + off, by + len * .5, fx + off * 1.4 + Math.sin(fx) * s * .3, by + len); ctx.stroke();
+          }
+          if (chunky){ ctx.fillStyle = acc; ctx.fillRect(fx - .9 * s, by + 1.2 * s, 1.8 * s, .8 * s); }
+        }
+      }
+}
+
+function drawScene(W, H){
+  const loop = state.style === "infinity";
+  const Wc = state.width, gap = Math.max(5, Wc * .3);
+  const yarn = find(YARNS, state.yarn), wool = find(WOOLS, state.wool);
+  const base = find(DYES, state.base).hex, acc = find(DYES, state.accent).hex;
+  const ri = gap / 2, ro = ri + Wc;
+  const strandCm = loop ? Math.max(10, (state.length - Math.PI * (ri + Wc / 2)) / 2) : state.length / 2;
+  const endCm = loop ? ro : state.fringe === "pompoms" ? 9 : (state.fringe === "fringe" || state.fringe === "tassels") ? state.fringeLen + 1 : 0;
+  const railCm = 5;
+  const totalW = 2 * Wc + gap + 14, totalH = railCm + strandCm + endCm + 2;
+
+  // the scarf lives in the left part of the board, the close-up lens on the right
+  const lensR = Math.max(36, Math.min(H * .27, W * .17));
+  const areaW = W - lensR * 2 - 28;
+  const s = Math.min(areaW * .94 / totalW, H * .92 / totalH);
+  const ox = (areaW - totalW * s) / 2 + 7 * s + 6, oy = (H - totalH * s) / 2;
+  const sw = Wc * s, xL = ox, xR = ox + sw + gap * s, railY = oy + railCm * s * .6;
+  const sh = strandCm * s, top = railY - Wc * s * .18;
+  const C = Math.max(5, Math.round(Wc / yarn.sw)), Rh = Math.max(4, Math.round(strandCm / yarn.rh));
+  const R = 2 * Rh;
+  const fuzz = noises[wool.id] || (noises[wool.id] = makeNoise(wool.fuzz));
+
+  // peg rail (behind)
+  ctx.fillStyle = "#B98257";
+  ctx.beginPath(); ctx.roundRect ? ctx.roundRect(xL - 7 * s, railY - 1.1 * s, totalW * s - 0 * s, 2.2 * s, 1.1 * s) : ctx.rect(xL - 7 * s, railY - 1.1 * s, totalW * s, 2.2 * s); ctx.fill();
+  ctx.fillStyle = "#D9A877"; ctx.fillRect(xL - 6 * s, railY - .9 * s, totalW * s - 2 * s, .6 * s);
+  [xL - 7 * s, xL - 7 * s + totalW * s].forEach(kx => { ctx.fillStyle = "#9E6B43"; ctx.beginPath(); ctx.arc(kx, railY, 1.8 * s, 0, 7); ctx.fill(); });
+  // the bit of scarf going over the peg, between the two strands
+  ctx.fillStyle = shade(base, -.25);
+  ctx.fillRect(xL + sw - 1, railY - 1.6 * s, gap * s + 2, 3.2 * s);
+
+  // fringe / tassels / pom-poms (behind strands)
+  if (!loop && state.fringe !== "none") [xL, xR].forEach(sx => drawEnds(sx, top + sh, sw, s, base, acc, yarn));
+
+  // infinity: the joined bottom loop
+  if (loop){
+    const cx = (xL + xR + sw) / 2, cy = top + sh;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx, cy, ro * s, Math.PI, 0, true); ctx.lineTo(cx + ri * s, cy); ctx.arc(cx, cy, ri * s, 0, Math.PI, false); ctx.closePath();
+    ctx.clip();
+    const Ru = Math.max(4, Math.round(ro / yarn.rh));
+    knit(cx - ro * s, cy - 1, ro * 2 * s, ro * s + 1, Math.round(ro * 2 / yarn.sw), Ru, dr => dr, 1e9, base, acc);
+    ctx.fillStyle = ctx.createPattern(fuzz, "repeat"); ctx.fillRect(cx - ro * s, cy, ro * 2 * s, ro * s);
+    ctx.fillStyle = "rgba(0,0,0,.08)"; ctx.fillRect(cx - ro * s, cy, ro * 2 * s, ro * s);
+    ctx.restore();
+  }
+
+  // the two hanging strands
+  [[xL, dr => Rh - 1 - dr], [xR, dr => Rh + dr]].forEach(([sx, rowOf], i) => {
+    roundTop(sx + 2, top + 5, sw, sh, sw * .3); ctx.fillStyle = "rgba(90,40,70,.16)"; ctx.fill();
+    ctx.save();
+    roundTop(sx, top, sw, sh, sw * .3); ctx.clip();
+    knit(sx, top, sw, sh, C, Rh, rowOf, R, base, acc);
+    cables(sx, top, sw, sh, s, base);
+    ctx.fillStyle = ctx.createPattern(fuzz, "repeat"); ctx.fillRect(sx, top, sw, sh);
+    const g = ctx.createLinearGradient(sx, 0, sx + sw, 0);
+    g.addColorStop(0, "rgba(0,0,0,.18)"); g.addColorStop(.35, "rgba(255,255,255,.08)"); g.addColorStop(.7, "rgba(255,255,255,0)"); g.addColorStop(1, "rgba(0,0,0,.16)");
+    ctx.fillStyle = g; ctx.fillRect(sx, top, sw, sh);
+    const g2 = ctx.createLinearGradient(0, top, 0, top + sw * .5);
+    g2.addColorStop(0, "rgba(255,255,255,.18)"); g2.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = g2; ctx.fillRect(sx, top, sw, sw * .5);
+    ctx.restore();
+  });
+
+  geom = {xL, sw, top, sh, s, loop};
+  // close-up lens
+  const lx = W - lensR - 14, ly = lensR + 14;
+  const zs = (lensR * 2) / (yarn.id === "chunky" ? 12 : 8);
+  ctx.beginPath(); ctx.arc(lx + 2, ly + 6, lensR + 5, 0, 7); ctx.fillStyle = "rgba(90,40,70,.16)"; ctx.fill();
+  ctx.beginPath(); ctx.arc(lx, ly, lensR + 5, 0, 7); ctx.fillStyle = "#FFFFFF"; ctx.fill();
+  ctx.save();
+  ctx.beginPath(); ctx.arc(lx, ly, lensR, 0, 7); ctx.clip();
+  ctx.fillStyle = shade(base, -.38); ctx.fillRect(lx - lensR, ly - lensR, lensR * 2, lensR * 2);
+  const zw = Wc * zs, zh = strandCm * zs;
+  const zx = lx - zw / 2;
+  const zy = loop ? ly - zh * .5 : (ly + lensR * .55) - zh;
+  ctx.fillStyle = "#E6F2FB"; ctx.fillRect(lx - lensR, ly - lensR, lensR * 2, lensR * 2);
+  knit(zx, zy, zw, zh, C, Rh, dr => Rh - 1 - dr, R, base, acc, [ly - lensR, ly + lensR, lx - lensR, lx + lensR]);
+  cables(zx, zy, zw, zh, zs, base);
+  ctx.fillStyle = ctx.createPattern(fuzz, "repeat"); ctx.fillRect(zx, Math.max(zy, ly - lensR), zw, lensR * 2);
+  ctx.restore();
+  ctx.lineWidth = 3; ctx.strokeStyle = "#F4A9C0"; ctx.setLineDash([5, 4]);
+  ctx.beginPath(); ctx.arc(lx, ly, lensR + 1.5, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+  ctx.font = `600 12px Fredoka, "Trebuchet MS", sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  const label = "close-up", lw = ctx.measureText(label).width + 18;
+  ctx.fillStyle = "#FFFFFF"; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(lx - lw / 2, ly + lensR + 10, lw, 22, 11) : ctx.rect(lx - lw / 2, ly + lensR + 10, lw, 22); ctx.fill();
+  ctx.fillStyle = "#4B2D45"; ctx.fillText(label, lx, ly + lensR + 21.5);
+}
+
+// The scarf worn by the shop cat.
+function drawWorn(W, H){
+  const loop = state.style === "infinity";
+  const yarn = find(YARNS, state.yarn), wool = find(WOOLS, state.wool);
+  const base = find(DYES, state.base).hex, acc = find(DYES, state.accent).hex;
+  const fuzz = noises[wool.id] || (noises[wool.id] = makeNoise(wool.fuzz));
+  const room = H - (W < 560 ? 40 : 48);            // keep the bottom clear for the buttons
+  const k = Math.min(room / 104, W / 112);
+  const cx = W / 2, oy = (room - 100 * k) / 2 + 3 * k;
+  const X = v => cx + v * k, Y = v => oy + v * k;
+  const OUT = "#4B2D45", WHITE = "#FFFFFF", BROWN = "#B07A4F", PINK = "#F2A7BC";
+  const lw = Math.max(1.5, .9 * k);
+  const tw = (6.5 + (state.width - 12) / 33 * 6) * k;   // scarf width on screen
+  const s = tw / state.width;                           // px per cm of scarf
+  const tailLen = (20 + (state.length - 100) / 140 * 22) * k;
+  const ell = (x, y, rx, ry, fill, stroke) => {
+    ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+    if (fill){ ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke){ ctx.strokeStyle = OUT; ctx.lineWidth = lw; ctx.stroke(); }
+  };
+  const tri = (pts, fill, stroke) => {
+    ctx.beginPath(); ctx.moveTo(X(pts[0]), Y(pts[1])); ctx.lineTo(X(pts[2]), Y(pts[3])); ctx.lineTo(X(pts[4]), Y(pts[5])); ctx.closePath();
+    ctx.fillStyle = fill; ctx.fill();
+    if (stroke){ ctx.strokeStyle = OUT; ctx.lineWidth = lw; ctx.lineJoin = "round"; ctx.stroke(); }
+  };
+  const knitIn = (pathFn, bx, by, bw, bh) => {
+    ctx.save(); pathFn(); ctx.clip();
+    knit(bx, by, bw, bh, Math.max(4, Math.round(bw / (yarn.sw * s))), Math.max(4, Math.round(bh / (yarn.rh * s))), dr => 1000 + dr, 1e9, base, acc);
+    ctx.fillStyle = ctx.createPattern(fuzz, "repeat"); ctx.fillRect(bx, by, bw, bh);
+    const g = ctx.createLinearGradient(0, by, 0, by + bh); g.addColorStop(0, "rgba(255,255,255,.12)"); g.addColorStop(1, "rgba(0,0,0,.14)");
+    ctx.fillStyle = g; ctx.fillRect(bx, by, bw, bh);
+    ctx.restore();
+    pathFn(); ctx.strokeStyle = shade(base, -.4); ctx.lineWidth = Math.max(1, .45 * k); ctx.stroke();
+  };
+
+  // floor shadow and a yarn ball to play with
+  ell(X(2), Y(97), 42 * k, 3.2 * k, "rgba(75,45,69,.14)");
+  const bx = X(-38), byy = Y(90), br = 7 * k;
+  ell(bx, byy, br, br, acc);
+  ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = Math.max(1, .5 * k);
+  [[-.9,-.3,.6,.8],[-.8,.5,.9,-.2],[-.3,-.95,-.1,.95]].forEach(([a,b,c,d]) => { ctx.beginPath(); ctx.moveTo(bx + a*br, byy + b*br); ctx.quadraticCurveTo(bx, byy, bx + c*br, byy + d*br); ctx.stroke(); });
+
+  // tail
+  const tailPath = () => { ctx.beginPath(); ctx.moveTo(X(18), Y(88)); ctx.bezierCurveTo(X(42), Y(88), X(44), Y(62), X(32), Y(54)); };
+  ctx.lineCap = "round";
+  tailPath(); ctx.strokeStyle = OUT; ctx.lineWidth = 9 * k; ctx.stroke();
+  tailPath(); ctx.strokeStyle = WHITE; ctx.lineWidth = 9 * k - 2 * lw; ctx.stroke();
+  ell(X(32.4), Y(55), 3.4 * k, 3.4 * k, BROWN);
+
+  // body and feet
+  ell(X(0), Y(72), 25 * k, 22 * k, WHITE);
+  ctx.save(); ctx.beginPath(); ctx.ellipse(X(0), Y(72), 25 * k, 22 * k, 0, 0, Math.PI * 2); ctx.clip();
+  ell(X(17), Y(66), 13 * k, 10 * k, BROWN); ell(X(-7), Y(95), 9 * k, 5 * k, BROWN);
+  ctx.restore();
+  ell(X(0), Y(72), 25 * k, 22 * k, null, true);
+  ell(X(-11), Y(92), 8 * k, 4.5 * k, WHITE, true); ell(X(11), Y(92), 8 * k, 4.5 * k, WHITE, true);
+  ctx.strokeStyle = OUT; ctx.lineWidth = Math.max(1, .5 * k);
+  [-13, -9, 9, 13].forEach(v => { ctx.beginPath(); ctx.moveTo(X(v), Y(90.5)); ctx.lineTo(X(v), Y(93)); ctx.stroke(); });
+
+  // hanging part of the scarf
+  geom = null;
+  if (loop){
+    const t = tw * 1.05 / k;
+    const drape = () => { ctx.beginPath(); ctx.moveTo(X(-21), Y(50)); ctx.quadraticCurveTo(X(0), Y(86), X(21), Y(50)); ctx.lineTo(X(21 - t), Y(50)); ctx.quadraticCurveTo(X(0), Y(86 - 2 * t), X(-21 + t), Y(50)); ctx.closePath(); };
+    knitIn(drape, X(-22), Y(48), 44 * k, 40 * k);
+  } else {
+    [[X(-13), .14, tailLen * .78], [X(-4), -.06, tailLen]].forEach(([tx, rot, len]) => {
+      ctx.save(); ctx.translate(tx, Y(52)); ctx.rotate(rot);
+      ctx.fillStyle = "rgba(75,45,69,.15)"; ctx.fillRect(-tw / 2 + 1.2 * k, 1.2 * k, tw, len);
+      const Rh = Math.max(4, Math.round(len / (yarn.rh * s)));
+      ctx.save(); ctx.beginPath(); ctx.rect(-tw / 2, 0, tw, len); ctx.clip();
+      knit(-tw / 2, 0, tw, len, Math.max(4, Math.round(tw / (yarn.sw * s))), Rh, dr => Rh - 1 - dr, 1e9, base, acc);
+      cables(-tw / 2, 0, tw, len, s, base);
+      ctx.fillStyle = ctx.createPattern(fuzz, "repeat"); ctx.fillRect(-tw / 2, 0, tw, len);
+      const g = ctx.createLinearGradient(-tw / 2, 0, tw / 2, 0);
+      g.addColorStop(0, "rgba(0,0,0,.16)"); g.addColorStop(.4, "rgba(255,255,255,.08)"); g.addColorStop(1, "rgba(0,0,0,.14)");
+      ctx.fillStyle = g; ctx.fillRect(-tw / 2, 0, tw, len);
+      ctx.restore();
+      if (state.fringe !== "none") drawEnds(-tw / 2, len, tw, Math.max(s, tw / 9), base, acc, yarn);
+      ctx.restore();
+    });
+    geom = {xL: X(-4) - tw / 2, sw: tw, top: Y(52), sh: tailLen, s, loop: false};
+  }
+
+  // head
+  tri([-20, 22, -17, 1, -4, 12], BROWN, true); tri([-17, 18, -15.5, 6, -8, 13], PINK);
+  tri([20, 22, 17, 1, 4, 12], WHITE, true); tri([17, 18, 15.5, 6, 8, 13], PINK);
+  ell(X(0), Y(28), 23 * k, 19.5 * k, WHITE);
+  ctx.save(); ctx.beginPath(); ctx.ellipse(X(0), Y(28), 23 * k, 19.5 * k, 0, 0, Math.PI * 2); ctx.clip();
+  ell(X(-15), Y(19), 13 * k, 11 * k, BROWN);
+  ctx.restore();
+  ell(X(0), Y(28), 23 * k, 19.5 * k, null, true);
+  ell(X(-8.5), Y(29), 2.6 * k, 3.3 * k, "#2A1A28"); ell(X(8.5), Y(29), 2.6 * k, 3.3 * k, "#2A1A28");
+  ell(X(-7.6), Y(27.6), .95 * k, .95 * k, WHITE); ell(X(9.4), Y(27.6), .95 * k, .95 * k, WHITE);
+  ell(X(-15.5), Y(35), 3.3 * k, 1.9 * k, PINK); ell(X(15.5), Y(35), 3.3 * k, 1.9 * k, PINK);
+  tri([-1.5, 33.8, 1.5, 33.8, 0, 35.4], "#E7799E");
+  ctx.strokeStyle = OUT; ctx.lineWidth = Math.max(1, .5 * k);
+  ctx.beginPath(); ctx.moveTo(X(0), Y(35.4)); ctx.quadraticCurveTo(X(-1), Y(37.8), X(-3.4), Y(36.8));
+  ctx.moveTo(X(0), Y(35.4)); ctx.quadraticCurveTo(X(1), Y(37.8), X(3.4), Y(36.8)); ctx.stroke();
+  ctx.globalAlpha = .6;
+  [[-20, 32, -29, 30], [-20, 35, -28.5, 36.5], [20, 32, 29, 30], [20, 35, 28.5, 36.5]].forEach(([a, b, c, d]) => { ctx.beginPath(); ctx.moveTo(X(a), Y(b)); ctx.lineTo(X(c), Y(d)); ctx.stroke(); });
+  ctx.globalAlpha = 1;
+
+  // the wrap around the neck, and the knot
+  const band = () => { ctx.beginPath(); ctx.moveTo(X(-21), Y(44)); ctx.quadraticCurveTo(X(0), Y(51), X(21), Y(44)); ctx.lineTo(X(21), Y(53)); ctx.quadraticCurveTo(X(0), Y(61), X(-21), Y(53)); ctx.closePath(); };
+  knitIn(band, X(-22), Y(42), 44 * k, 20 * k);
+  if (!loop){
+    const kn = () => { ctx.beginPath(); ctx.ellipse(X(-8), Y(54), tw * .55, 4.2 * k, -.2, 0, Math.PI * 2); };
+    knitIn(kn, X(-8) - tw * .6, Y(49), tw * 1.2, 10 * k);
+  }
+}
+
+function drawTag(){
+  if (!state.initials || !geom) return;
+  const {xL, sw, top, sh, s, loop} = geom;
+  const acc = find(DYES, state.accent).hex;
+    const tw = Math.max(26, 6.5 * s), th = Math.max(16, 3.6 * s);
+    const tx = xL + sw / 2 - tw / 2, ty = top + sh - (loop ? 18 : 13) * s;
+    ctx.save(); ctx.translate(tx + tw / 2, ty + th / 2); ctx.rotate(-.06);
+    ctx.fillStyle = "#FFF7EE"; ctx.strokeStyle = "rgba(0,0,0,.12)"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.roundRect ? ctx.roundRect(-tw/2, -th/2, tw, th, th * .25) : ctx.rect(-tw/2, -th/2, tw, th); ctx.fill(); ctx.stroke();
+    ctx.setLineDash([3, 2]); ctx.strokeStyle = state.base === state.accent ? "#E7799E" : acc; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.roundRect ? ctx.roundRect(-tw/2 + 3, -th/2 + 3, tw - 6, th - 6, th * .18) : ctx.rect(-tw/2 + 3, -th/2 + 3, tw - 6, th - 6); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = "#4B2D45"; ctx.font = `600 ${Math.max(9, th * .55)}px Fredoka, "Trebuchet MS", sans-serif`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(state.initials, 0, 1);
+    ctx.restore();
+  }
+
+
+function draw(){
+  if (sizeDirty){
+    const box = $("canvasBox").getBoundingClientRect();
+    if (!box.width || !box.height) return;
+    DPR = Math.min(2, window.devicePixelRatio || 1); CW = box.width; CH = box.height;
+    canvas.width = layer.width = Math.round(CW * DPR); canvas.height = layer.height = Math.round(CH * DPR);
+    sizeDirty = false; lastKey = ""; sprites.clear();
+  }
+  const {initials, gift, ...look} = state;
+  const key = view + JSON.stringify(look);
+  if (key !== lastKey){
+    ctx = layerCtx; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, CW, CH);
+    if (view === "worn") drawWorn(CW, CH); else drawScene(CW, CH);
+    lastKey = key;
+  }
+  ctx = mainCtx;
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(layer, 0, 0);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  drawTag();
+}
+
+new ResizeObserver(() => { sizeDirty = true; update(false); }).observe($("canvasBox"));
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { lastKey = ""; update(false); });
+
+
+/* ---------- the kitty ---------- */
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const LINES = {
+  style: {straight:"Classic! Perfect for tossing over a shoulder.", infinity:"Round and round, like chasing my tail!"},
+  wool: {lamb:"Toasty warm!", merino:"Soft as my paws.", alpaca:"So fluffy, I want to nap on it!"},
+  yarn: {fine:"Light and drapey, how elegant.", medium:"Everyday cosy. Good choice!", chunky:"Big and squishy, purr-fect!"},
+  size: {kids:"A tiny scarf for a tiny human!", skinny:"Sleek and skinny!", classic:"The classic size. Can't go wrong.", wide:"Extra cosy, like a blanket!"},
+  pattern: {classic:"A timeless knit.", ribbed:"Stretchy ribs, nice and snug.", seed:"Bumpy like tiny pebbles!", stripes:"Stripes! Just like my tail.", cable:"Ooh, fancy twisty cables!", hearts:"Hearts! My favourite \u2665"},
+  fringe: {none:"Neat and tidy.", fringe:"Wiggly fringe! Must... not... pounce.", tassels:"Chunky tassels, so swishy!", pompoms:"Pom-poms!! Can I bat them?"},
+};
+const PETS = ["Purr~", "Mrrp! \u2665", "Hehe, that tickles!", "More pets please!", "You have good taste."];
+const COLOUR_LINES = [n => `Ooh, ${n}!`, n => `${n} is so pretty!`, n => `${n}? Meow-velous.`];
+let talkTimer = 0;
+function say(text){
+  const b = $("bubble"), pk = $("peek");
+  b.textContent = text; b.classList.add("show"); pk.classList.add("up");
+  clearTimeout(talkTimer);
+  talkTimer = setTimeout(() => { b.classList.remove("show"); pk.classList.remove("up"); }, 2400);
+}
+function react(key, val){
+  if (key === "base" || key === "accent"){
+    const n = find(DYES, val).name;
+    say(COLOUR_LINES[Math.floor(Math.random() * COLOUR_LINES.length)](n)); return;
+  }
+  if (key === "gift"){ if (val) say("A gift? How sweet \u2665"); return; }
+  const t = LINES[key] && LINES[key][val];
+  if (t) say(t);
+}
+function burst(el){
+  if (reduceMotion) return;
+  const r = el.getBoundingClientRect();
+  for (let i = 0; i < 6; i++){
+    const h = document.createElement("span");
+    h.className = "burst"; h.textContent = "\u2665";
+    const a = Math.random() * Math.PI * 2, d = 26 + Math.random() * 22;
+    h.style.left = (r.left + r.width / 2 - 6) + "px"; h.style.top = (r.top + r.height / 2 - 7) + "px";
+    h.style.setProperty("--dx", Math.cos(a) * d + "px"); h.style.setProperty("--dy", Math.sin(a) * d - 10 + "px");
+    h.style.fontSize = (10 + Math.random() * 8) + "px";
+    document.body.appendChild(h); setTimeout(() => h.remove(), 750);
+  }
+}
+$("peek").addEventListener("click", () => say(PETS[Math.floor(Math.random() * PETS.length)]));
+$("len").addEventListener("change", () => say(state.length > 200 ? "Sooo long! Wrap it twice." : state.length < 140 ? "Short and sweet!" : "That length looks just right."));
+$("wid").addEventListener("change", () => say(state.width > 30 ? "Wide and snuggly!" : "Nice and neat."));
+$("initials").addEventListener("change", () => { if (state.initials) say(`I'll sew "${state.initials}" on with care.`); });
+let sharedLoaded = false;
+setTimeout(() => { if (!sharedLoaded) say("Hi! Let's design your scarf \u2665"); }, 1200);
+
+/* ---------- favourites, sharing, worn view ---------- */
+// Where shared links point. Change this if the site moves to its own domain.
+const SITE_URL = "https://littlestichstudio.netlify.app/";
+const PRESETS = [
+  {id:"strawberry", name:"Strawberry Milk", note:"Blush merino with little berry hearts and pom-poms",
+    d:{style:"straight", wool:"merino", yarn:"medium", length:180, width:22, base:"blush", accent:"berry", pattern:"hearts", fringe:"pompoms", fringeLen:8}},
+  {id:"midnight", name:"Midnight Cable", note:"Chunky night-blue cables with cloud-white tassels",
+    d:{style:"straight", wool:"lamb", yarn:"chunky", length:200, width:32, base:"navy", accent:"ivory", pattern:"cable", fringe:"tassels", fringeLen:10}},
+  {id:"mintchoco", name:"Mint Choco Stripes", note:"Mint and cocoa stripes, finished with a fringe",
+    d:{style:"straight", wool:"merino", yarn:"medium", length:180, width:22, base:"mint", accent:"cocoa", pattern:"stripes", fringe:"fringe", fringeLen:8}},
+  {id:"lavender", name:"Lavender Cloud", note:"A fluffy alpaca infinity loop in seed stitch",
+    d:{style:"infinity", wool:"alpaca", yarn:"chunky", length:170, width:25, base:"lavender", accent:"ivory", pattern:"seed", fringe:"none", fringeLen:8}},
+  {id:"butter", name:"Butter Toast", note:"A skinny ribbed scarf in butter with cocoa tips",
+    d:{style:"straight", wool:"lamb", yarn:"medium", length:160, width:15, base:"butter", accent:"cocoa", pattern:"ribbed", fringe:"fringe", fringeLen:6}},
+  {id:"littlesky", name:"Little Sky", note:"A kids' scarf in sky blue with butter pom-poms",
+    d:{style:"straight", wool:"merino", yarn:"chunky", length:120, width:14, base:"sky", accent:"butter", pattern:"classic", fringe:"pompoms", fringeLen:8}},
+];
+
+function applyDesign(d){
+  state = {...DEFAULT, initials: state.initials, gift: state.gift, ...d};
+  buildSizes();
+  const m = sizes().find(x => x.l === state.length && x.w === state.width);
+  state.size = m ? m.id : "custom";
+  update(true);
+}
+function presetMatches(p){
+  return Object.keys(p.d).every(k => k === "fringeLen" ? true : state[k] === p.d[k]);
+}
+
+// Draw a small knitted swatch of a preset onto its card.
+function renderThumb(c, p){
+  const r = c.getBoundingClientRect();
+  if (!r.width) return;
+  const W = r.width, H = r.height, dpr = Math.min(2, window.devicePixelRatio || 1);
+  c.width = Math.round(W * dpr); c.height = Math.round(H * dpr);
+  const saved = state, savedCtx = ctx;
+  state = {...DEFAULT, ...p.d, initials:"", gift:false};
+  ctx = c.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  try {
+    const yarn = find(YARNS, state.yarn), base = find(DYES, state.base).hex, acc = find(DYES, state.accent).hex;
+    const loop = state.style === "infinity";
+    const pw = yarn.id === "chunky" ? 8.5 : yarn.id === "fine" ? 5 : 6.5;
+    const w = W * (loop ? .7 : .56), h = H * (loop ? .62 : .64), x = (W - w) / 2, y = H * (loop ? .19 : .07);
+    const C = Math.max(5, Math.round(w / pw)), Rh = Math.max(4, Math.round(h / (pw * yarn.rh / yarn.sw)));
+    const sc = pw / yarn.sw;
+    ctx.fillStyle = "rgba(75,45,69,.16)";
+    ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x + 2, y + 4, w, h, loop ? h / 2 : [w * .18, w * .18, 3, 3]) : ctx.rect(x + 2, y + 4, w, h); ctx.fill();
+    ctx.save(); ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, h, loop ? h / 2 : [w * .18, w * .18, 3, 3]) : ctx.rect(x, y, w, h); ctx.clip();
+    knit(x, y, w, h, C, Rh, dr => Rh - 1 - dr, 1e9, base, acc);
+    cables(x, y, w, h, sc, base);
+    const g = ctx.createLinearGradient(x, 0, x + w, 0);
+    g.addColorStop(0, "rgba(0,0,0,.14)"); g.addColorStop(.4, "rgba(255,255,255,.1)"); g.addColorStop(1, "rgba(0,0,0,.12)");
+    ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
+    ctx.restore();
+    if (!loop && state.fringe !== "none"){
+      const room = H - (y + h) - 3;
+      const es = room / (state.fringe === "pompoms" ? 9 : state.fringeLen + 1);
+      drawEnds(x, y + h, w, es, base, acc, yarn);
+    }
+  } finally { state = saved; ctx = savedCtx; }
+}
+
+function buildPresets(){
+  const grid = $("presetGrid");
+  PRESETS.forEach(p => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "preset"; b.dataset.preset = p.id; b.id = "fav-" + p.id;
+    const saved = state; state = {...DEFAULT, ...p.d, initials:"", gift:false};
+    const price = inr(quote().total); state = saved;
+    b.innerHTML = `<canvas class="thumb" aria-hidden="true"></canvas><span class="pname">${p.name}</span><span class="pnote">${p.note}</span><span class="pprice">${price}</span>`;
+    b.setAttribute("aria-label", `${p.name}: ${p.note}, ${price}. Load into the designer`);
+    b.addEventListener("click", () => {
+      applyDesign(p.d); burst(b);
+      say(`Great pick! ${p.name} ♥`);
+      $("design").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "start"});
+    });
+    grid.appendChild(b);
+  });
+  const drawAll = () => document.querySelectorAll(".preset").forEach(b => renderThumb(b.querySelector("canvas"), PRESETS.find(p => p.id === b.dataset.preset)));
+  let t = 0;
+  new ResizeObserver(() => { cancelAnimationFrame(t); t = requestAnimationFrame(drawAll); }).observe(grid);
+}
+function markPresets(){
+  document.querySelectorAll(".preset").forEach(b => b.classList.toggle("on", presetMatches(PRESETS.find(p => p.id === b.dataset.preset))));
+}
+
+// A design packs into a short token of letters, digits and dots, so it survives in a link.
+function encodeDesign(st){
+  const ix = (arr, id) => Math.max(0, arr.findIndex(x => x.id === id));
+  return ["d", ix(STYLES, st.style), ix(WOOLS, st.wool), ix(YARNS, st.yarn), st.length, st.width,
+    ix(DYES, st.base), ix(DYES, st.accent), ix(PATTERNS, st.pattern), ix(FRINGES, st.fringe), st.fringeLen,
+    st.gift ? 1 : 0, (st.initials || "").replace(/\./g, "_") || "~"].join(".");
+}
+function decodeDesign(tok){
+  const p = String(tok || "").split(".");
+  if (p[0] !== "d" || p.length < 13) return null;
+  const n = i => parseInt(p[i], 10), pick = (arr, i) => arr[n(i)] ? arr[n(i)].id : null;
+  const clamp = (v, lo, hi, dflt) => Number.isFinite(v) ? Math.min(hi, Math.max(lo, v)) : dflt;
+  const d = {style: pick(STYLES, 1), wool: pick(WOOLS, 2), yarn: pick(YARNS, 3),
+    length: clamp(n(4), 100, 240, 180), width: clamp(n(5), 12, 45, 22),
+    base: pick(DYES, 6), accent: pick(DYES, 7), pattern: pick(PATTERNS, 8), fringe: pick(FRINGES, 9),
+    fringeLen: clamp(n(10), 4, 15, 8), gift: n(11) === 1,
+    initials: p[12] === "~" ? "" : p[12].replace(/_/g, ".").toUpperCase().replace(/[^A-Z.]/g, "").slice(0, 3)};
+  if (Object.values(d).some(v => v === null)) return null;
+  return d;
+}
+function shareURL(){
+  const host = location.hostname;
+  const local = location.protocol === "file:" || !host || /claude|anthropic|usercontent|localhost|127\.0\.0\.1/.test(host);
+  return (local ? SITE_URL : location.origin + location.pathname) + "#" + encodeDesign(state);
+}
+function fillShare(){
+  const url = shareURL();
+  $("shareLink").value = url;
+  $("waShare").href = "https://wa.me/?text=" + encodeURIComponent("What do you think of my scarf design? " + url);
+}
+$("shareBtn").addEventListener("click", async () => {
+  if (navigator.share && matchMedia("(pointer: coarse)").matches){
+    try { await navigator.share({title: "My Little Stitch Studio scarf", text: "What do you think of my scarf design?", url: shareURL()}); return; }
+    catch (e) { if (e && e.name === "AbortError") return; }
+  }
+  fillShare(); $("sharePop").hidden = !$("sharePop").hidden;
+});
+$("shareClose").addEventListener("click", () => { $("sharePop").hidden = true; });
+$("copyLink").addEventListener("click", () => {
+  const sel = () => { $("shareLink").focus(); $("shareLink").select(); say("Press Ctrl+C to copy the link."); };
+  try {
+    navigator.clipboard.writeText($("shareLink").value).then(() => { $("copyLink").textContent = "Copied!"; say("Link copied! Send it to a friend ♥"); setTimeout(() => $("copyLink").textContent = "Copy", 1800); }, sel);
+  } catch (e) { sel(); }
+});
+
+function setView(v){
+  view = v;
+  $("viewPeg").setAttribute("aria-pressed", String(v === "peg"));
+  $("viewCat").setAttribute("aria-pressed", String(v === "worn"));
+  $("canvasBox").classList.toggle("worn", v === "worn");
+  update(true);
+}
+$("viewPeg").addEventListener("click", () => { setView("peg"); say("Back on the peg."); });
+$("viewCat").addEventListener("click", () => { setView("worn"); say("Look, I'm wearing it! ♥"); });
+
+function loadShared(){
+  let tok = "";
+  try { tok = decodeURIComponent((location.hash || "").slice(1)); } catch (e) {}
+  if (!tok){ try { tok = new URLSearchParams(location.search).get("d") || ""; } catch (e) {} }
+  const d = decodeDesign(tok);
+  if (!d) return;
+  sharedLoaded = true;
+  applyDesign(d);
+  setTimeout(() => say("Someone shared this design with you ♥"), 900);
+}
+window.addEventListener("hashchange", loadShared);
+
+/* ---------- order ---------- */
+try {
+  const quoteBar = document.querySelector(".quote");
+  new IntersectionObserver(es => quoteBar.classList.toggle("away", es[0].isIntersecting), {threshold:.1}).observe($("order"));
+} catch(e) {}
+function hearts(){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const box = $("hearts");
+  for (let i = 0; i < 18; i++){
+    const h = document.createElement("i");
+    h.textContent = "♥";
+    h.style.left = Math.random() * 100 + "%";
+    h.style.fontSize = (16 + Math.random() * 22) + "px";
+    h.style.animationDelay = (Math.random() * .6) + "s";
+    box.appendChild(h);
+    setTimeout(() => h.remove(), 3200);
+  }
+}
+$("orderForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const name = $("fname").value.trim(), phone = $("fphone").value.trim(), city = $("fcity").value.trim(), email = $("femail").value.trim();
+  if (!name || !phone || !city){ $("formErr").textContent = "Add your name, phone number and city so we can confirm your order."; return; }
+  if (phone.replace(/\D/g, "").length < 10){ $("formErr").textContent = "That phone number looks short. Include all 10 digits."; return; }
+  if (email && !/^\S+@\S+\.\S+$/.test(email)){ $("formErr").textContent = "That email doesn't look right. Fix it or leave it blank."; return; }
+  $("formErr").textContent = "";
+  const ref = "LSS-" + Math.floor(1000 + Math.random() * 9000);
+  const q = quote();
+  const text = [`Little Stitch Studio order ${ref}`, "",
+    ...summaryRows().map(r => `${r[0]}: ${r[1]}`),
+    `Estimated price: ${inr(q.total)}`, "",
+    `Name: ${name}`, `Phone: ${phone}`, email ? `Email: ${email}` : null, `City / PIN: ${city}`,
+    $("fnotes").value.trim() ? `Notes: ${$("fnotes").value.trim()}` : null].filter(Boolean).join("\n");
+  $("refOut").textContent = ref; $("orderText").textContent = text;
+  if (WHATSAPP_NUMBER){ $("waBtn").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`; $("waBtn").hidden = false; }
+  $("orderForm").hidden = true; $("done").hidden = false;
+  hearts();
+});
+$("copyBtn").addEventListener("click", () => {
+  const t = $("orderText").textContent;
+  const sel = () => { const r = document.createRange(); r.selectNodeContents($("orderText")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("copyBtn").textContent = "Selected. Press Ctrl+C"; };
+  try { navigator.clipboard.writeText(t).then(() => { $("copyBtn").textContent = "Copied ♥"; setTimeout(() => $("copyBtn").textContent = "Copy order details", 1800); }, sel); } catch(e){ sel(); }
+});
+$("editBtn").addEventListener("click", () => { $("done").hidden = true; $("orderForm").hidden = false; });
+
+if (!SIZES[state.style]) state.style = "straight";
+buildSizes();
+buildPresets();
+update(false);
+loadShared();
+</script>
+
+</body>
+</html>
